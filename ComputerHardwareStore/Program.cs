@@ -1,4 +1,7 @@
 
+using ComputerHardwareStore.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
+
 namespace ComputerHardwareStore
 {
     public class Program
@@ -10,23 +13,35 @@ namespace ComputerHardwareStore
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            // Added services with extensions methods
+            builder.Services.ConfigureCors();
+            builder.Services.ConfigureIISIntegration();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // Code from the book. Added middleware for CORS/IIS
+            app.UseStaticFiles();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
+            app.UseCors("CorsPolicy");
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
