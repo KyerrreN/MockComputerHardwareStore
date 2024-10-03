@@ -1,4 +1,7 @@
-﻿namespace ComputerHardwareStore.Extensions
+﻿using Contracts;
+using LoggerService;
+
+namespace ComputerHardwareStore.Extensions
 {
     public static class ServiceExtensions
     {
@@ -24,6 +27,12 @@
             {
 
             });
+        }
+
+        // Configuring logging
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
     }
 }

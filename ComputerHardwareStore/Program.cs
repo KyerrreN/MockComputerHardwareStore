@@ -1,4 +1,4 @@
-
+using NLog;
 using ComputerHardwareStore.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 
@@ -14,9 +14,14 @@ namespace ComputerHardwareStore
 
             builder.Services.AddControllers();
 
+            // Logging (obsolete for some reason, but in the book
+            // the configuration is loaded like this)
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+
             // Added services with extensions methods
             builder.Services.ConfigureCors();
             builder.Services.ConfigureIISIntegration();
+            builder.Services.ConfigureLoggerService();
 
             var app = builder.Build();
 
