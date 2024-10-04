@@ -1,5 +1,6 @@
 ﻿using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Configuration;
 
 namespace Repository
 {
@@ -9,6 +10,14 @@ namespace Repository
         public RepositoryContext(DbContextOptions options) : base (options)
         { 
         }
+
+        // OnModelCreating
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new GraphicsCardConfiguration());
+        }
+
 
         // Db Sets
         public DbSet<Product>? Products { get; set; }
