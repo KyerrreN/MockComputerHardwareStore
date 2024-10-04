@@ -6,8 +6,6 @@ namespace Entities.Models
     // graphics cards
     public class GraphicsCard : Product
     {
-        public Guid Id { get; set; } // FK
-
         [Required(ErrorMessage = "Distributor field is required")]
         [MaxLength(20)]
         public string? Distributor { get; set; }
