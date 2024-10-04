@@ -1,5 +1,9 @@
 ﻿using Contracts;
 using LoggerService;
+using Microsoft.EntityFrameworkCore;
+using Repository;
+using Service;
+using Service.Contracts;
 
 namespace ComputerHardwareStore.Extensions
 {
@@ -33,6 +37,27 @@ namespace ComputerHardwareStore.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+
+        // Add repository manager
+        public static void ConfigureRepositoryManager(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
+        }
+
+        // Add service manager
+        public static void ConfigureServiceManager(this IServiceCollection services)
+        {
+            services.AddScoped<IServiceManager, ServiceManager>();
+        }
+
+        // Add Sql Context for future operations with database
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<RepositoryContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("sqlConnection"));
+            });
         }
     }
 }

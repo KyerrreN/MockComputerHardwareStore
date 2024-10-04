@@ -12,6 +12,8 @@ namespace ComputerHardwareStore
 
             // Add services to the container.
 
+            builder.Services.ConfigureRepositoryManager();
+            builder.Services.ConfigureServiceManager();
             builder.Services.AddControllers();
 
             // Logging (obsolete for some reason, but in the book
@@ -22,6 +24,7 @@ namespace ComputerHardwareStore
             builder.Services.ConfigureCors();
             builder.Services.ConfigureIISIntegration();
             builder.Services.ConfigureLoggerService();
+            builder.Services.ConfigureSqlContext(builder.Configuration);
 
             var app = builder.Build();
 
