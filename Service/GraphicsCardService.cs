@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -33,7 +34,10 @@ namespace Service
         {
             var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(id, trackChanges);
 
-            //Check for null here
+            if (graphicsCard is null)
+            {
+                throw new GraphicsCardNotFoundException(id);
+            }
 
             var graphicsCardDto = _mapper.Map<GraphicsCardDto>(graphicsCard);
             return graphicsCardDto;
