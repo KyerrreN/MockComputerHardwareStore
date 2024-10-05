@@ -1,6 +1,7 @@
 using NLog;
 using ComputerHardwareStore.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using Contracts;
 
 namespace ComputerHardwareStore
 {
@@ -32,11 +33,12 @@ namespace ComputerHardwareStore
 
             // Configure the HTTP request pipeline.
 
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+            // Add logger to use it in our exception handling middleware
+            var logger = app.Services.GetRequiredService<ILoggerManager>();
+            app.ConfigureExceptionHandler(logger);
+
+            // If we're not in Staging or Production
+            if (app.Environment.IsProduction())
             {
                 app.UseHsts();
             }
