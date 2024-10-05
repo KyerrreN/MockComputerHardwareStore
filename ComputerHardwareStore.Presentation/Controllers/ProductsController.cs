@@ -19,16 +19,9 @@ namespace ComputerHardwareStore.Presentation.Controllers
         [HttpGet]
         public IActionResult GetGraphicsCards()
         {
-            try
-            {
-                var graphicsCards = _service.GraphicsCardService.GetAllGraphicsCards(trackChanges: false);
+            var graphicsCards = _service.GraphicsCardService.GetAllGraphicsCards(trackChanges: false);
 
-                return Ok(graphicsCards);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(graphicsCards);
         }
     }
 }
