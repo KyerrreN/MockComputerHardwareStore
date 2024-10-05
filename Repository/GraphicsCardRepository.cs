@@ -13,5 +13,12 @@ namespace Repository
         public GraphicsCardRepository(RepositoryContext context) : base(context)
         {
         }
+
+        public IEnumerable<GraphicsCard> GetAllGraphicsCards(bool trackChanges)
+        {
+            return FindAll(trackChanges)
+                .OrderBy(g => g.Manufacturer)
+                .ToList();
+        }
     }
 }

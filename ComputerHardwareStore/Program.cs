@@ -14,7 +14,9 @@ namespace ComputerHardwareStore
 
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
+            builder.Services.AddAutoMapper(typeof(Program));
 
             // Logging (obsolete for some reason, but in the book
             // the configuration is loaded like this)

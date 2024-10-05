@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,11 @@ namespace Service
 
         // ctor
         public ServiceManager(IRepositoryManager repositoryManager,
-                              ILoggerManager loggerManager)
+                              ILoggerManager loggerManager,
+                              IMapper mapper)
         {
-            _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repositoryManager, loggerManager));
-            _graphicsCardService = new Lazy<IGraphicsCardService>(() => new GraphicsCardService(repositoryManager, loggerManager));
+            _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repositoryManager, loggerManager, mapper));
+            _graphicsCardService = new Lazy<IGraphicsCardService>(() => new GraphicsCardService(repositoryManager, loggerManager, mapper));
         }
 
         // Interface Implementation to serve necessary services on demand
