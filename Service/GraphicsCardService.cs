@@ -28,5 +28,15 @@ namespace Service
 
             return graphicsCardsDto;
         }
+
+        public GraphicsCardDto GetGraphicsCard(Guid id, bool trackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(id, trackChanges);
+
+            //Check for null here
+
+            var graphicsCardDto = _mapper.Map<GraphicsCardDto>(graphicsCard);
+            return graphicsCardDto;
+        }
     }
 }

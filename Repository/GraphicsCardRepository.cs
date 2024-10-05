@@ -20,5 +20,11 @@ namespace Repository
                 .OrderBy(g => g.Manufacturer)
                 .ToList();
         }
+
+        public GraphicsCard GetGraphicsCard(Guid id, bool trackChanges)
+        {
+            return FindByCondition(g => g.Id.Equals(id), trackChanges)
+                .SingleOrDefault();
+        }
     }
 }

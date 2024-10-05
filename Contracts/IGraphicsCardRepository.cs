@@ -10,5 +10,6 @@ namespace Contracts
     public interface IGraphicsCardRepository
     {
         IEnumerable<GraphicsCard> GetAllGraphicsCards(bool trackChanges);
+        GraphicsCard GetGraphicsCard(Guid id, bool trackChanges);
     }
 }
