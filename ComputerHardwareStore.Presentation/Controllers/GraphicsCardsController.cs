@@ -3,14 +3,14 @@ using Service.Contracts;
 
 namespace ComputerHardwareStore.Presentation.Controllers
 {
-    [Route("api/products")]
+    [Route("api/graphicscards")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class GraphicsCardsController : ControllerBase
     {
         // DI
         private readonly IServiceManager _service;
 
-        public ProductsController(IServiceManager service)
+        public GraphicsCardsController(IServiceManager service)
         {
             _service = service;
         }

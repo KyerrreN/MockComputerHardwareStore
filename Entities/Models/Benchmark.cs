@@ -22,10 +22,6 @@ namespace Entities.Models
         [MaxLength(64)]
         public string GameName { get; set; }
 
-        [Required(ErrorMessage = "FPS of the benchmark is required")]
-        [Precision(3,1)]
-        public decimal Fps { get; set; }
-
         [Required(ErrorMessage = "Resolution is required")]
         public BenchmarkResolution Resolution { get; set; }
 
@@ -33,7 +29,6 @@ namespace Entities.Models
         public BenchmarkSettings Settings { get; set; }
 
         // Relationships
-        public Guid GraphicsCardId { get; set; } // FK
-        public GraphicsCard GraphicsCard { get; set; } = null!; // Reference navigation to Graphics Cards
+        public ICollection<GraphicsCardBenchmark> GraphicsCardBenchmarks { get; } = [];
     }
 }

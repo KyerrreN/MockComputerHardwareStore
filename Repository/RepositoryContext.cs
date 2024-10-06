@@ -14,16 +14,15 @@ namespace Repository
         // OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new GraphicsCardConfiguration());
             modelBuilder.ApplyConfiguration(new BenchmarkConfiguration());
+            modelBuilder.ApplyConfiguration(new GraphicsCardBenchmarkConfiguration());
         }
 
 
         // Db Sets
-        public DbSet<Product>? Products { get; set; }
         public DbSet<GraphicsCard>? GraphicsCards { get; set; }
-        public DbSet<Category>? Categories { get; set; }
         public DbSet<Benchmark>? Benchmarks { get; set; }
+        public DbSet<GraphicsCardBenchmark>? GraphicsCardBenchmarks { get; set; }
     }
 }

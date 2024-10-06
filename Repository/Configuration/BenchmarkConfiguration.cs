@@ -19,10 +19,43 @@ namespace Repository.Configuration
                 {
                     Id = 1,
                     GameName = "Cyberpunk 2077",
-                    Fps = 96.7M,
                     Resolution = Entities.Enum.BenchmarkResolution.UltraHD,
-                    Settings = Entities.Enum.BenchmarkSettings.High,
-                    GraphicsCardId = new Guid("50ea126c-b789-4a14-bb74-153ef1cb018b")
+                    Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 2,
+                    GameName = "Cyberpunk 2077",
+                    Resolution = Entities.Enum.BenchmarkResolution.QuadHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 3,
+                    GameName = "Cyberpunk 2077",
+                    Resolution = Entities.Enum.BenchmarkResolution.FullHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 4,
+                    GameName = "Horizon: Zero Dawn",
+                    Resolution = Entities.Enum.BenchmarkResolution.UltraHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 5,
+                    GameName = "Horizon: Zero Dawn",
+                    Resolution = Entities.Enum.BenchmarkResolution.QuadHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 6,
+                    GameName = "Horizon: Zero Dawn",
+                    Resolution = Entities.Enum.BenchmarkResolution.QuadHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
                 }
             );
         }
