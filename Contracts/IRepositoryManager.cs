@@ -4,6 +4,7 @@
     {
         ICategoryRepository Category { get; }
         IGraphicsCardRepository GraphicsCard { get; }
+        IBenchmarkRepository Benchmark { get; }
         void Save();
     }
 }

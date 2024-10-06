@@ -34,5 +34,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "RTX support field is required")]
         public bool IsSupportRtx { get; set; }
 
+        // Relationship
+        public Benchmark? Benchmark { get; set; } // Reference Navigation to Benchmark
     }
 }

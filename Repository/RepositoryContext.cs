@@ -16,6 +16,7 @@ namespace Repository
         {
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new GraphicsCardConfiguration());
+            modelBuilder.ApplyConfiguration(new BenchmarkConfiguration());
         }
 
 
@@ -23,5 +24,6 @@ namespace Repository
         public DbSet<Product>? Products { get; set; }
         public DbSet<GraphicsCard>? GraphicsCards { get; set; }
         public DbSet<Category>? Categories { get; set; }
+        public DbSet<Benchmark>? Benchmarks { get; set; }
     }
 }
