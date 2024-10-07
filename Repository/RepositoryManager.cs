@@ -12,16 +12,22 @@ namespace Repository
         // fields to work with
         private readonly RepositoryContext _context;
         private readonly Lazy<IGraphicsCardRepository> _graphicsCardRepository;
+        private readonly Lazy<IGraphicsCardBenchmarkRepository> _graphicsCardBenchmarkRepository;
+        private readonly Lazy<IBenchmarkRepository> _benchmarkRepository;
 
         // DI
         public RepositoryManager(RepositoryContext context)
         {
             _context = context;
             _graphicsCardRepository = new Lazy<IGraphicsCardRepository>(() => new GraphicsCardRepository(context));
+            _graphicsCardBenchmarkRepository = new Lazy<IGraphicsCardBenchmarkRepository>(() => new GraphicsCardBenchmarkRepository(context));
+            _benchmarkRepository = new Lazy<IBenchmarkRepository>(() => new BenchmarkRepository(context));
         }
 
         // Properties to serve needed repositories
         public IGraphicsCardRepository GraphicsCard => _graphicsCardRepository.Value;
+        public IGraphicsCardBenchmarkRepository GraphicsCardBenchmark => _graphicsCardBenchmarkRepository.Value;
+        public IBenchmarkRepository BenchmarkRepository => _benchmarkRepository.Value;
 
         // Method to save changes
         public void Save()

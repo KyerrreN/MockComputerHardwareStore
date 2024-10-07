@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Service.Contracts
 {
-    public interface IGraphicsCardService
+    public interface IGraphicsCardBenchmarkService
     {
-        IEnumerable<GraphicsCardDto> GetAllGraphicsCards(bool trackChanges);
-        GraphicsCardDto GetGraphicsCard(Guid id, bool trackChanges);
+        IEnumerable<BenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges);
     }
 }

@@ -9,5 +9,6 @@ namespace Service.Contracts
     public interface IServiceManager
     {
         IGraphicsCardService GraphicsCardService { get; }
+        IGraphicsCardBenchmarkService GraphicsCardBenchmarkService { get; }
     }
 }
