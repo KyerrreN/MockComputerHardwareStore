@@ -16,7 +16,6 @@ namespace Repository
         {
             
         }
-
         public IEnumerable<GraphicsCardBenchmark> GetBenchmarks(Guid graphicsCardId, bool trackChanges)
         {
             return FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
@@ -24,6 +23,13 @@ namespace Repository
                 .Include(gb => gb.Benchmark)
                 .OrderBy(gb => gb.Fps)
                 .ToList();
+        }
+        public GraphicsCardBenchmark GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        {
+            return FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId) && gb.BenchmarkId.Equals(benchmarkId), trackChanges)
+                .Include(gb => gb.Benchmark)
+                .Include(gb => gb.GraphicsCard)
+                .SingleOrDefault();
         }
     }
 }

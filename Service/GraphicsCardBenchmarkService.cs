@@ -46,5 +46,25 @@ namespace Service
 
             return benchmarksDto;
         }
+        public BenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+
+            if (graphicsCard is null)
+            {
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+            }
+
+            var benchmark = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmarkId, trackChanges);
+
+            if (benchmark is null)
+            {
+                throw new BenchmarkNotFoundException(benchmarkId);
+            }
+
+            var benchmarkDto = _mapper.Map<BenchmarkDto>(benchmark);
+
+            return benchmarkDto;
+        }
     }
 }

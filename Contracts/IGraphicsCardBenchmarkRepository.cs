@@ -10,5 +10,6 @@ namespace Contracts
     public interface IGraphicsCardBenchmarkRepository
     {
         IEnumerable<GraphicsCardBenchmark> GetBenchmarks(Guid graphicsCardId, bool trackChanges);
+        GraphicsCardBenchmark GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges);
     }
 }

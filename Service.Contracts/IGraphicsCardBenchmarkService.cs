@@ -10,5 +10,6 @@ namespace Service.Contracts
     public interface IGraphicsCardBenchmarkService
     {
         IEnumerable<BenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges);
+        BenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges);
     }
 }

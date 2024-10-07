@@ -25,5 +25,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             return Ok(benchmarks);
         }
+
+        [HttpGet("{id:int}")]
+        public IActionResult GetGraphicsCardBenchmark(Guid graphicsCardId, int id)
+        {
+            var benchmark = _service.GraphicsCardBenchmarkService.GetBenchmark(graphicsCardId, id, trackChanges: false);
+
+            return Ok(benchmark);
+        }
     }
 }
