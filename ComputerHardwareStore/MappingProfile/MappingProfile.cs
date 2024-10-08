@@ -9,19 +9,19 @@ namespace ComputerHardwareStore.MappingProfile
         public MappingProfile() 
         {
             CreateMap<GraphicsCard, GraphicsCardDto>()
-                .ForCtorParam("FullName",
+                .ForMember(g => g.FullName,
                 opt => opt.MapFrom(x => string.Join(' ', x.Distributor, x.Manufacturer, x.Model)));
 
             CreateMap<GraphicsCardBenchmark, BenchmarkDto>()
-                .ForCtorParam("Id",
+                .ForMember(g => g.Id,
                 opt => opt.MapFrom(x => x.BenchmarkId))
-                .ForCtorParam("GraphicsCardName",
+                .ForMember(g => g.GraphicsCardName,
                 opt => opt.MapFrom(x => string.Join(' ', x.GraphicsCard.Distributor, x.GraphicsCard.Manufacturer, x.GraphicsCard.Model)))
-                .ForCtorParam("GameName",
+                .ForMember(g => g.GameName,
                 opt => opt.MapFrom(x => x.Benchmark.GameName))
-                .ForCtorParam("Resolution",
+                .ForMember(g => g.Resolution,
                 opt => opt.MapFrom(x => x.Benchmark.Resolution.ToString()))
-                .ForCtorParam("Settings",
+                .ForMember(g => g.Settings,
                 opt => opt.MapFrom(x => x.Benchmark.Settings.ToString()));
         }
     }

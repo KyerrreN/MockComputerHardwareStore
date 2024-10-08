@@ -6,5 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
-    public record BenchmarkDto(int Id, string GraphicsCardName, string GameName, string Resolution, string Settings, decimal Fps);
+    public record BenchmarkDto
+    {
+        public int Id { get; init; }
+        public string GraphicsCardName { get; init; }
+        public string GameName { get; init; }
+        public string Resolution { get; init; }
+        public string Settings { get; init; }
+        public decimal Fps { get; init; }
+    };
 }

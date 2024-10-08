@@ -15,8 +15,17 @@ namespace ComputerHardwareStore
 
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
-            builder.Services.AddControllers()
-                .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
+
+            // Configure to accept headers from 
+            // HTTP request and adding XML formatter
+            builder.Services.AddControllers(config =>
+            {
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters()
+              .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
+
+            // Automapper service
             builder.Services.AddAutoMapper(typeof(Program));
 
             // Logging (obsolete for some reason, but in the book
