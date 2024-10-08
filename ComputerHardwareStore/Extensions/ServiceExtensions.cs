@@ -59,5 +59,14 @@ namespace ComputerHardwareStore.Extensions
                 options.UseSqlServer(configuration.GetConnectionString("sqlConnection"));
             });
         }
+
+        // Add CSV serializer/formatter
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder)
+        {
+            return builder.AddMvcOptions(config =>
+            {
+                config.OutputFormatters.Add(new CsvOutputFormatter());
+            });
+        }
     }
 }

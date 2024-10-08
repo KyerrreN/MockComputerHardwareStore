@@ -23,6 +23,7 @@ namespace ComputerHardwareStore
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
             }).AddXmlDataContractSerializerFormatters()
+              .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
 
             // Automapper service
