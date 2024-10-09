@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -41,6 +42,18 @@ namespace Service
 
             var graphicsCardDto = _mapper.Map<GraphicsCardDto>(graphicsCard);
             return graphicsCardDto;
+        }
+
+        public GraphicsCardDto CreateGraphicsCard(GraphicsCardForCreationDto graphicsCard)
+        {
+            var graphicsCardEntity = _mapper.Map<GraphicsCard>(graphicsCard);
+
+            _repository.GraphicsCard.CreateGraphicsCard(graphicsCardEntity);
+            _repository.Save();
+
+            var graphicsCardToReturn = _mapper.Map<GraphicsCardDto>(graphicsCardEntity);
+
+            return graphicsCardToReturn;
         }
     }
 }

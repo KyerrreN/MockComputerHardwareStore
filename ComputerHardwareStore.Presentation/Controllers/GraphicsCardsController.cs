@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace ComputerHardwareStore.Presentation.Controllers
 {
@@ -24,11 +25,24 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(graphicsCards);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}", Name = "GraphicsCardById")]
         public IActionResult GetGraphicsCard(Guid id)
         {
             var graphicsCard = _service.GraphicsCardService.GetGraphicsCard(id, trackChanges: false);
             return Ok(graphicsCard);
+        }
+
+        [HttpPost]
+        public IActionResult CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
+        {
+            if (graphicsCard is null)
+            {
+                return BadRequest("GraphicsCardForCreationDto object is null");
+            }
+
+            var createdGraphicsCard = _service.GraphicsCardService.CreateGraphicsCard(graphicsCard);
+
+            return CreatedAtRoute("GraphicsCardById", new { id = createdGraphicsCard.Id }, createdGraphicsCard);
         }
     }
 }

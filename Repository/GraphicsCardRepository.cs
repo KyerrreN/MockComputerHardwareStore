@@ -26,5 +26,10 @@ namespace Repository
             return FindByCondition(g => g.Id.Equals(id), trackChanges)
                 .SingleOrDefault();
         }
+
+        public void CreateGraphicsCard(GraphicsCard graphicsCard)
+        {
+            Create(graphicsCard);
+        }
     }
 }

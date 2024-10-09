@@ -23,6 +23,8 @@ namespace ComputerHardwareStore.MappingProfile
                 opt => opt.MapFrom(x => x.Benchmark.Resolution.ToString()))
                 .ForMember(g => g.Settings,
                 opt => opt.MapFrom(x => x.Benchmark.Settings.ToString()));
+
+            CreateMap<GraphicsCardForCreationDto, GraphicsCard>();
         }
     }
 }
