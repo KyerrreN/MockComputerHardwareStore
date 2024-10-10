@@ -26,5 +26,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             return Ok(benchmarks);
         }
+
+        [HttpGet("{id:int}", Name = "GetBenchmarkById")]
+        public IActionResult GetBenchmarkById(int id)
+        {
+            var benchmark = _service.BenchmarkService.GetBenchmark(id, trackChanges: false);
+
+            return Ok(benchmark);
+        }
     }
 }

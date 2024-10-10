@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -50,6 +51,9 @@ namespace Service
         public BenchmarkDto GetBenchmark(int id, bool trackChanges)
         {
             var benchmark = _repository.Benchmark.GetBenchmark(id, trackChanges);
+
+            if (benchmark is null)
+                throw new BenchmarkNotFoundException(id);
 
             var benchmarkDto = _mapper.Map<BenchmarkDto>(benchmark);
 

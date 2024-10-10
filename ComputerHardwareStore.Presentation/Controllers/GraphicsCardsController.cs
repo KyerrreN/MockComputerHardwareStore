@@ -29,6 +29,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         public IActionResult GetGraphicsCard(Guid id)
         {
             var graphicsCard = _service.GraphicsCardService.GetGraphicsCard(id, trackChanges: false);
+
             return Ok(graphicsCard);
         }
 
