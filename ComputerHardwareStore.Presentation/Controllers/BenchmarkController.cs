@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,17 @@ namespace ComputerHardwareStore.Presentation.Controllers
             var benchmark = _service.BenchmarkService.GetBenchmark(id, trackChanges: false);
 
             return Ok(benchmark);
+        }
+
+        [HttpPost]
+        public IActionResult CreateBenchmark([FromBody] BenchmarkForCreationDto bechmark)
+        {
+            if (bechmark is null)
+                return BadRequest("BenchmarkDto object is null");
+
+            var createdBenchmark = _service.BenchmarkService.CreateBenchmark(bechmark);
+
+            return CreatedAtRoute("GetBenchmarkById", new { id = createdBenchmark.Id }, createdBenchmark);
         }
     }
 }

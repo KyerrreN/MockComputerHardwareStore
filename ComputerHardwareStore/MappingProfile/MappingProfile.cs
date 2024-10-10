@@ -35,7 +35,7 @@ namespace ComputerHardwareStore.MappingProfile
                 .ForMember(b => b.Settings,
                 opt => opt.MapFrom(x => x.Settings.ToString()));
 
-            CreateMap<BenchmarkDto, Benchmark>();
+            CreateMap<BenchmarkForCreationDto, Benchmark>();
         }
     }
 }
