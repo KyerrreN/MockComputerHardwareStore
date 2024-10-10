@@ -26,7 +26,7 @@ namespace Service
             _mapper = mapper;
         }
 
-        public IEnumerable<BenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges)
+        public IEnumerable<GraphicsCardBenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges)
         {
             var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(grapicsCardId, trackChanges);
 
@@ -42,11 +42,11 @@ namespace Service
                 throw new GraphicsCardBenchmarkNotFoundException(grapicsCardId);
             }
 
-            var benchmarksDto = _mapper.Map<IEnumerable<BenchmarkDto>>(benchmarks);
+            var benchmarksDto = _mapper.Map<IEnumerable<GraphicsCardBenchmarkDto>>(benchmarks);
 
             return benchmarksDto;
         }
-        public BenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        public GraphicsCardBenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {
             var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
 
@@ -62,7 +62,7 @@ namespace Service
                 throw new BenchmarkNotFoundException(benchmarkId);
             }
 
-            var benchmarkDto = _mapper.Map<BenchmarkDto>(benchmark);
+            var benchmarkDto = _mapper.Map<GraphicsCardBenchmarkDto>(benchmark);
 
             return benchmarkDto;
         }

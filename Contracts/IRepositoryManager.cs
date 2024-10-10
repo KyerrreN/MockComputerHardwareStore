@@ -4,7 +4,7 @@
     {
         IGraphicsCardRepository GraphicsCard { get; }
         IGraphicsCardBenchmarkRepository GraphicsCardBenchmark { get; }
-        IBenchmarkRepository BenchmarkRepository { get; }
+        IBenchmarkRepository Benchmark { get; }
         void Save();
     }
 }

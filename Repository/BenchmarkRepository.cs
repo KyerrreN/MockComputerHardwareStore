@@ -14,11 +14,20 @@ namespace Repository
             : base (context)
         {
         }
-
-        public IEnumerable<Benchmark> GetBenchmarks(int benchmarkId, bool trackChanges)
+        public IEnumerable<Benchmark> GetBenchmarks(bool trackChanges)
         {
-            return FindByCondition(b => b.Id.Equals(benchmarkId), trackChanges)
+            return FindAll(trackChanges)
+                .OrderBy(b => b.Id)
                 .ToList();
+        }
+        public Benchmark GetBenchmark(int benchmarkId, bool trackChanges)
+        {
+            return FindByCondition(g => g.Id.Equals(benchmarkId), trackChanges)
+                .SingleOrDefault();
+        }
+        public void CreateBenchmark(Benchmark benchmark)
+        {
+            Create(benchmark);
         }
     }
 }

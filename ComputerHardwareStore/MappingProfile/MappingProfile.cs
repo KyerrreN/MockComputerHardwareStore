@@ -8,11 +8,15 @@ namespace ComputerHardwareStore.MappingProfile
     {
         public MappingProfile() 
         {
+            // GraphicsCard
             CreateMap<GraphicsCard, GraphicsCardDto>()
                 .ForMember(g => g.FullName,
                 opt => opt.MapFrom(x => string.Join(' ', x.Distributor, x.Manufacturer, x.Model)));
 
-            CreateMap<GraphicsCardBenchmark, BenchmarkDto>()
+            CreateMap<GraphicsCardForCreationDto, GraphicsCard>();
+
+            // GraphicsCardBenchmark
+            CreateMap<GraphicsCardBenchmark, GraphicsCardBenchmarkDto>()
                 .ForMember(g => g.Id,
                 opt => opt.MapFrom(x => x.BenchmarkId))
                 .ForMember(g => g.GraphicsCardName,
@@ -24,7 +28,14 @@ namespace ComputerHardwareStore.MappingProfile
                 .ForMember(g => g.Settings,
                 opt => opt.MapFrom(x => x.Benchmark.Settings.ToString()));
 
-            CreateMap<GraphicsCardForCreationDto, GraphicsCard>();
+            // Benchmark
+            CreateMap<Benchmark, BenchmarkDto>()
+                .ForMember(b => b.Resolution,
+                opt => opt.MapFrom(x => x.Resolution.ToString()))
+                .ForMember(b => b.Settings,
+                opt => opt.MapFrom(x => x.Settings.ToString()));
+
+            CreateMap<BenchmarkDto, Benchmark>();
         }
     }
 }

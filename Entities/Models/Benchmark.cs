@@ -21,7 +21,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "The name of the game is required")]
         [MaxLength(64)]
         public string GameName { get; set; }
-
+        
         [Required(ErrorMessage = "Resolution is required")]
         public BenchmarkResolution Resolution { get; set; }
 

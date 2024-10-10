@@ -27,7 +27,7 @@ namespace Repository
         // Properties to serve needed repositories
         public IGraphicsCardRepository GraphicsCard => _graphicsCardRepository.Value;
         public IGraphicsCardBenchmarkRepository GraphicsCardBenchmark => _graphicsCardBenchmarkRepository.Value;
-        public IBenchmarkRepository BenchmarkRepository => _benchmarkRepository.Value;
+        public IBenchmarkRepository Benchmark => _benchmarkRepository.Value;
 
         // Method to save changes
         public void Save()
