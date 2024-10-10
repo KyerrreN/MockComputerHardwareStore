@@ -5,7 +5,7 @@ using Shared.DataTransferObjects;
 namespace ComputerHardwareStore.Presentation.Controllers
 {
     [Route("api/graphicscards")]
-    [ApiController]
+    //[ApiController]
     public class GraphicsCardsController : ControllerBase
     {
         // DI

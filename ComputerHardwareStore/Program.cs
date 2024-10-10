@@ -2,6 +2,7 @@ using NLog;
 using ComputerHardwareStore.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
 using Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ComputerHardwareStore
 {
@@ -18,6 +19,7 @@ namespace ComputerHardwareStore
 
             // Configure to accept headers from 
             // HTTP request and adding XML formatter
+
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
@@ -25,6 +27,12 @@ namespace ComputerHardwareStore
             }).AddXmlDataContractSerializerFormatters()
               .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
+
+            // Suprresing filters of ApiController attribute
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             // Automapper service
             builder.Services.AddAutoMapper(typeof(Program));
