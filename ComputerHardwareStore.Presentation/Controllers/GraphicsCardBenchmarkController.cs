@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         private readonly IServiceManager _service;
         public GraphicsCardBenchmarkController(IServiceManager service)
         {
-            _service = service; 
+            _service = service;
         }
 
         [HttpGet]
@@ -26,12 +27,28 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(benchmarks);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "GetGraphicsCardBenchmark")]
         public IActionResult GetGraphicsCardBenchmark(Guid graphicsCardId, int id)
         {
             var benchmark = _service.GraphicsCardBenchmarkService.GetBenchmark(graphicsCardId, id, trackChanges: false);
 
             return Ok(benchmark);
+        }
+
+        [HttpPost("{id:int}")]
+        public IActionResult CreateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
+        {
+            if (graphicsCardBenchmark is null)
+                return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
+
+            var graphicsCardBenchmarkToReturn = _service.GraphicsCardBenchmarkService.CreateGraphicsCardBenchmark(graphicsCardId,
+                                                                                                         id,
+                                                                                                         graphicsCardBenchmark,
+                                                                                                         trackChanges: false);
+
+            return CreatedAtRoute("GetGraphicsCardBenchmark", 
+                new { graphicsCardId = graphicsCardId, id = graphicsCardBenchmarkToReturn.Id }, 
+                graphicsCardBenchmarkToReturn);
         }
     }
 }

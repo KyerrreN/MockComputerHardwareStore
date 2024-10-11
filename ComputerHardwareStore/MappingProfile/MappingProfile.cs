@@ -28,6 +28,8 @@ namespace ComputerHardwareStore.MappingProfile
                 .ForMember(g => g.Settings,
                 opt => opt.MapFrom(x => x.Benchmark.Settings.ToString()));
 
+            CreateMap<GraphicsCardBenchmarkForCreationDto, GraphicsCardBenchmark>();
+
             // Benchmark
             CreateMap<Benchmark, BenchmarkDto>()
                 .ForMember(b => b.Resolution,

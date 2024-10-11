@@ -31,5 +31,12 @@ namespace Repository
                 .Include(gb => gb.GraphicsCard)
                 .SingleOrDefault();
         }
+
+        public void CreateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmark benchmark)
+        {
+            benchmark.GraphicsCardId = graphicsCardId;
+            benchmark.BenchmarkId = benchmarkId;
+            Create(benchmark);
+        }
     }
 }

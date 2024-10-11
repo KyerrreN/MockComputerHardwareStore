@@ -11,5 +11,9 @@ namespace Service.Contracts
     {
         IEnumerable<GraphicsCardBenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges);
         GraphicsCardBenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges);
+        GraphicsCardBenchmarkDto CreateGraphicsCardBenchmark(Guid graphicsCardId,
+                                                             int benchmarkId,
+                                                             GraphicsCardBenchmarkForCreationDto benchmark,
+                                                             bool trackChanges);
     }
 }

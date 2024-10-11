@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -65,6 +66,35 @@ namespace Service
             var benchmarkDto = _mapper.Map<GraphicsCardBenchmarkDto>(benchmark);
 
             return benchmarkDto;
+        }
+
+        public GraphicsCardBenchmarkDto CreateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark, bool trackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, false);
+            if (graphicsCard is null)
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+
+            var benchmark = _repository.Benchmark.GetBenchmark(benchmarkId, false);
+            if (benchmark is null)
+                throw new BenchmarkNotFoundException(benchmarkId);
+
+            var graphicsCardBenchmarkInDB = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId,
+                                                                                           benchmarkId,
+                                                                                           false);
+            if (graphicsCardBenchmarkInDB is not null)
+                throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
+
+            // Map from DTO to entity
+            var graphicsCardBenchmarkEntity = _mapper.Map<GraphicsCardBenchmark>(graphicsCardBenchmark);
+            _repository.GraphicsCardBenchmark.CreateGraphicsCardBenchmark(
+                                                                    graphicsCardId,
+                                                                    benchmarkId,
+                                                                    graphicsCardBenchmarkEntity);
+            _repository.Save();
+
+            var graphicsCardBenchmarkToReturn = _mapper.Map<GraphicsCardBenchmarkDto>(graphicsCardBenchmarkEntity);
+
+            return graphicsCardBenchmarkToReturn;
         }
     }
 }
