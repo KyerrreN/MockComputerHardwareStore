@@ -92,7 +92,12 @@ namespace Service
                                                                     graphicsCardBenchmarkEntity);
             _repository.Save();
 
-            var graphicsCardBenchmarkToReturn = _mapper.Map<GraphicsCardBenchmarkDto>(graphicsCardBenchmarkEntity);
+            // I AM NOT SURE IF ITS GOOD
+            var graphicsCardBenchmarkCreated = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId,
+                                                                                              benchmarkId,
+                                                                                              false);
+
+            var graphicsCardBenchmarkToReturn = _mapper.Map<GraphicsCardBenchmarkDto>(graphicsCardBenchmarkCreated);
 
             return graphicsCardBenchmarkToReturn;
         }
