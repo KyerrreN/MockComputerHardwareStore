@@ -46,9 +46,17 @@ namespace ComputerHardwareStore.Presentation.Controllers
                                                                                                          graphicsCardBenchmark,
                                                                                                          trackChanges: false);
 
-            return CreatedAtRoute("GetGraphicsCardBenchmark", 
-                new { graphicsCardId = graphicsCardId, id = graphicsCardBenchmarkToReturn.Id }, 
+            return CreatedAtRoute("GetGraphicsCardBenchmark",
+                new { graphicsCardId = graphicsCardId, id = graphicsCardBenchmarkToReturn.Id },
                 graphicsCardBenchmarkToReturn);
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteGraphicsCardBenchmark(Guid graphicsCardId, int id)
+        {
+            _service.GraphicsCardBenchmarkService.DeleteBenchmarkForGraphicsCard(graphicsCardId, id, false);
+
+            return NoContent();
         }
     }
 }

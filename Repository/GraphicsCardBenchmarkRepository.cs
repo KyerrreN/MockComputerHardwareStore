@@ -38,5 +38,10 @@ namespace Repository
             benchmark.BenchmarkId = benchmarkId;
             Create(benchmark);
         }
+
+        public void DeleteGraphicsCardBenchmark(GraphicsCardBenchmark benchmark)
+        {
+            Delete(benchmark);
+        }
     }
 }

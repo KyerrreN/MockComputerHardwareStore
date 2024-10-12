@@ -101,5 +101,23 @@ namespace Service
 
             return graphicsCardBenchmarkToReturn;
         }
+
+        public void DeleteBenchmarkForGraphicsCard(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+            if (graphicsCard is null)
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+
+            var benchmark = _repository.Benchmark.GetBenchmark(benchmarkId, trackChanges);
+            if (benchmark is null)
+                throw new BenchmarkNotFoundException(benchmarkId);
+
+            var graphicsCardBenchmark = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmarkId, trackChanges);
+            if (graphicsCardBenchmark is null)
+                throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
+
+            _repository.GraphicsCardBenchmark.DeleteGraphicsCardBenchmark(graphicsCardBenchmark);
+            _repository.Save();
+        }
     }
 }

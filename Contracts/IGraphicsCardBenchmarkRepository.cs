@@ -12,5 +12,6 @@ namespace Contracts
         IEnumerable<GraphicsCardBenchmark> GetBenchmarks(Guid graphicsCardId, bool trackChanges);
         GraphicsCardBenchmark GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges);
         void CreateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmark benchmark);
+        void DeleteGraphicsCardBenchmark(GraphicsCardBenchmark benchmark);
     }
 }
