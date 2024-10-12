@@ -13,5 +13,6 @@ namespace Service.Contracts
         GraphicsCardDto GetGraphicsCard(Guid id, bool trackChanges);
         GraphicsCardDto CreateGraphicsCard(GraphicsCardForCreationDto graphicsCard);
         IEnumerable<GraphicsCardDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
+        (IEnumerable<GraphicsCardDto> graphicsCards, string ids) CreateGraphicsCardCollection(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection);
     }
 }

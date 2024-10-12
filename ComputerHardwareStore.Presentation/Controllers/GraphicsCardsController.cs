@@ -53,5 +53,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             return CreatedAtRoute("GraphicsCardById", new { id = createdGraphicsCard.Id }, createdGraphicsCard);
         }
+
+        [HttpPost("collection")]
+        public IActionResult CreateGraphicsCardCollection([FromBody] IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
+        {
+            var result = _service.GraphicsCardService.CreateGraphicsCardCollection(graphicsCardCollection);
+
+            return CreatedAtRoute("GraphicsCardCollection", new { result.ids }, result.graphicsCards);
+        }
     }
 }

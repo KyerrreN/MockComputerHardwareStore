@@ -70,5 +70,23 @@ namespace Service
 
             return graphicsCardsDto;
         }
+
+        public (IEnumerable<GraphicsCardDto> graphicsCards, string ids) CreateGraphicsCardCollection(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
+        {
+            if (graphicsCardCollection is null)
+                throw new GraphicsCardCollectionBadRequest();
+
+            var graphicsCardEntities = _mapper.Map<IEnumerable<GraphicsCard>>(graphicsCardCollection);
+            foreach (var graphicsCard in graphicsCardEntities)
+            {
+                _repository.GraphicsCard.CreateGraphicsCard(graphicsCard);
+            }
+            _repository.Save();
+
+            var graphicsCardCollectionToReturn = _mapper.Map<IEnumerable<GraphicsCardDto>>(graphicsCardEntities);
+            var ids = string.Join(',', graphicsCardCollectionToReturn.Select(g => g.Id));
+
+            return (graphicsCards: graphicsCardCollectionToReturn, ids: ids);
+        }
     }
 }
