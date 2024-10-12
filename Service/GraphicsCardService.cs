@@ -88,5 +88,15 @@ namespace Service
 
             return (graphicsCards: graphicsCardCollectionToReturn, ids: ids);
         }
+
+        public void DeleteGraphicsCard(Guid graphicsCardId, bool trackChanges)
+        {
+            var graphicsCardEntity = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+            if (graphicsCardEntity is null)
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+
+            _repository.GraphicsCard.DeleteGraphicsCard(graphicsCardEntity);
+            _repository.Save();
+        }
     }
 }

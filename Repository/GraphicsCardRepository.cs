@@ -37,5 +37,10 @@ namespace Repository
             return FindByCondition(g => ids.Contains(g.Id), trackChanges)
                 .ToList();
         }
+
+        public void DeleteGraphicsCard(GraphicsCard graphicsCard)
+        {
+            Delete(graphicsCard);
+        }
     }
 }

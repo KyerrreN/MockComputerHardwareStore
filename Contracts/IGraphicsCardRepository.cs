@@ -13,5 +13,6 @@ namespace Contracts
         GraphicsCard GetGraphicsCard(Guid id, bool trackChanges);
         void CreateGraphicsCard(GraphicsCard graphicsCard);
         IEnumerable<GraphicsCard> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
+        void DeleteGraphicsCard(GraphicsCard graphicsCard);
     }
 }

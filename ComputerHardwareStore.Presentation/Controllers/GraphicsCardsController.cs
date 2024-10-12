@@ -62,5 +62,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             return CreatedAtRoute("GraphicsCardCollection", new { result.ids }, result.graphicsCards);
         }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteGraphicsCard(Guid id)
+        {
+            _service.GraphicsCardService.DeleteGraphicsCard(id, trackChanges: false);
+
+            return NoContent();
+        }
     }
 }
