@@ -33,6 +33,14 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(graphicsCard);
         }
 
+        [HttpGet("collection/({ids})", Name = "GraphicsCardCollection")]
+        public IActionResult GetGraphicsCardCollection(IEnumerable<Guid> ids)
+        {
+            var graphicsCardCollection = _service.GraphicsCardService.GetByIds(ids, trackChanges: false);
+
+            return Ok(graphicsCardCollection);
+        }
+
         [HttpPost]
         public IActionResult CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
         {

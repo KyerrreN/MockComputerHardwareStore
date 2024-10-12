@@ -31,5 +31,11 @@ namespace Repository
         {
             Create(graphicsCard);
         }
+
+        public IEnumerable<GraphicsCard> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        {
+            return FindByCondition(g => ids.Contains(g.Id), trackChanges)
+                .ToList();
+        }
     }
 }

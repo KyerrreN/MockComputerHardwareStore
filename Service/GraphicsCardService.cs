@@ -55,5 +55,20 @@ namespace Service
 
             return graphicsCardToReturn;
         }
+
+        public IEnumerable<GraphicsCardDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        {
+            if (ids is null)
+                throw new IdParametersBadRequestException();
+
+            var graphicsCards = _repository.GraphicsCard.GetByIds(ids, trackChanges);
+
+            if (ids.Count() != graphicsCards.Count())
+                throw new CollectionByIdsBadRequestException();
+
+            var graphicsCardsDto = _mapper.Map<IEnumerable<GraphicsCardDto>>(graphicsCards);
+
+            return graphicsCardsDto;
+        }
     }
 }
