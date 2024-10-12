@@ -2,6 +2,7 @@
 using Contracts;
 using Entities.Exceptions;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -117,6 +118,24 @@ namespace Service
                 throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
 
             _repository.GraphicsCardBenchmark.DeleteGraphicsCardBenchmark(graphicsCardBenchmark);
+            _repository.Save();
+        }
+
+        public void UpdateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, gdTrackChanges);
+            if (graphicsCard is null)
+                throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
+
+            var benchmark = _repository.Benchmark.GetBenchmark(benchmarkId, false);
+            if (benchmark is null)
+                throw new BenchmarkNotFoundException(benchmarkId);
+
+            var graphicsCardBenchmarkEntity = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmarkId, bnTrackChanges);
+            if (graphicsCardBenchmarkEntity is null)
+                throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
+
+            _mapper.Map(graphicsCardBenchmark, graphicsCardBenchmarkEntity);
             _repository.Save();
         }
     }

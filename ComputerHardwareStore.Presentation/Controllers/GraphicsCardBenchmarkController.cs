@@ -58,5 +58,20 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{id:int}")]
+        public IActionResult UpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
+        {
+            if (graphicsCardBenchmark is null)
+                return BadRequest("GraphicsCardBenchmarkForUpdateDto object is null");
+
+            _service.GraphicsCardBenchmarkService.UpdateGraphicsCardBenchmark(graphicsCardId,
+                                                                              id,
+                                                                              graphicsCardBenchmark,
+                                                                              gdTrackChanges: false,
+                                                                              bnTrackChanges: true);
+
+            return NoContent();
+        }
     }
 }

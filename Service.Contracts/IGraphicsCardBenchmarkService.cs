@@ -16,5 +16,6 @@ namespace Service.Contracts
                                                              GraphicsCardBenchmarkForCreationDto benchmark,
                                                              bool trackChanges);
         void DeleteBenchmarkForGraphicsCard(Guid graphicsCardId, int benchmarkId, bool trackChanges);
+        void UpdateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges);
     }
 }
