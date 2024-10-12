@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ComputerHardwareStore.Presentation.ModelBinders;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -34,7 +35,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet("collection/({ids})", Name = "GraphicsCardCollection")]
-        public IActionResult GetGraphicsCardCollection(IEnumerable<Guid> ids)
+        public IActionResult GetGraphicsCardCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
         {
             var graphicsCardCollection = _service.GraphicsCardService.GetByIds(ids, trackChanges: false);
 
