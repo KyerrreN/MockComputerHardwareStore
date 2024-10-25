@@ -32,7 +32,7 @@ namespace ComputerHardwareStore.MappingProfile
 
             CreateMap<GraphicsCardBenchmarkForCreationDto, GraphicsCardBenchmark>();
 
-            CreateMap<GraphicsCardBenchmarkForUpdateDto, GraphicsCardBenchmark>();
+            CreateMap<GraphicsCardBenchmarkForUpdateDto, GraphicsCardBenchmark>().ReverseMap();
 
             // Benchmark
             CreateMap<Benchmark, BenchmarkDto>()

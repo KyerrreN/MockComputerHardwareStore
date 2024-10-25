@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -70,6 +71,21 @@ namespace ComputerHardwareStore.Presentation.Controllers
                                                                               graphicsCardBenchmark,
                                                                               gdTrackChanges: false,
                                                                               bnTrackChanges: true);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id:int}")]
+        public IActionResult PartiallyUpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] JsonPatchDocument<GraphicsCardBenchmarkForUpdateDto> patchDoc)
+        {
+            if (patchDoc is null)
+                return BadRequest("PatchDoc object sent from a client is null");
+
+            var result = _service.GraphicsCardBenchmarkService.GetGraphicsCardBenchmarkForPatch(graphicsCardId, id, false, true);
+
+            patchDoc.ApplyTo(result.graphicsCardBenchmarkToPatch);
+
+            _service.GraphicsCardBenchmarkService.SaveChangesForPatch(result.graphicsCardBenchmarkToPatch, result.graphicsCardBenchmarkEntity);
 
             return NoContent();
         }

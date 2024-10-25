@@ -1,13 +1,25 @@
-using NLog;
 using ComputerHardwareStore.Extensions;
-using Microsoft.AspNetCore.HttpOverrides;
 using Contracts;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
+using NLog;
 
 namespace ComputerHardwareStore
 {
     public class Program
     {
+        // Local function to workaround applying NewtonsoftJson
+        // configuration to ALL JSON formatters
+        private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
+        {
+            return new ServiceCollection().AddLogging().AddMvc().AddNewtonsoftJson()
+                        .Services.BuildServiceProvider()
+                        .GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+                        .OfType<NewtonsoftJsonPatchInputFormatter>().First();
+        }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +36,7 @@ namespace ComputerHardwareStore
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
+                config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
             }).AddXmlDataContractSerializerFormatters()
               .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);

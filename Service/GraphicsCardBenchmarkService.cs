@@ -138,5 +138,30 @@ namespace Service
             _mapper.Map(graphicsCardBenchmark, graphicsCardBenchmarkEntity);
             _repository.Save();
         }
+
+        public (GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity) GetGraphicsCardBenchmarkForPatch(Guid graphicsCardId, int benchmarkId, bool gcTrackChanges, bool benchTrackChanges)
+        {
+            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, gcTrackChanges);
+            if (graphicsCard is null)
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+
+            var benchmark = _repository.Benchmark.GetBenchmark(benchmarkId, benchTrackChanges);
+            if (benchmark is null)
+                throw new BenchmarkNotFoundException(benchmarkId);
+
+            var graphicsCardBenchmarkEntity = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmarkId, benchTrackChanges);
+            if (graphicsCardBenchmarkEntity is null)
+                throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
+
+            var graphicsCardBenchmarkToPatch = _mapper.Map<GraphicsCardBenchmarkForUpdateDto>(graphicsCardBenchmarkEntity);
+
+            return (graphicsCardBenchmarkToPatch, graphicsCardBenchmarkEntity);
+        }
+
+        public void SaveChangesForPatch(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity)
+        {
+            _mapper.Map(graphicsCardBenchmarkToPatch, graphicsCardBenchmarkEntity);
+            _repository.Save();
+        }
     }
 }
