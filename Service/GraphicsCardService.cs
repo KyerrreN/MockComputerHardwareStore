@@ -98,5 +98,15 @@ namespace Service
             _repository.GraphicsCard.DeleteGraphicsCard(graphicsCardEntity);
             _repository.Save();
         }
+
+        public void UpdateGraphicsCard(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges)
+        {
+            var graphicsCardEntity = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+            if (graphicsCardEntity is null)
+                throw new GraphicsCardNotFoundException(graphicsCardId);
+
+            _mapper.Map(graphicsCardForUpdate, graphicsCardEntity);
+            _repository.Save();
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet("collection/({ids})", Name = "GraphicsCardCollection")]
-        public IActionResult GetGraphicsCardCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))]IEnumerable<Guid> ids)
+        public IActionResult GetGraphicsCardCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
         {
             var graphicsCardCollection = _service.GraphicsCardService.GetByIds(ids, trackChanges: false);
 
@@ -67,6 +67,17 @@ namespace ComputerHardwareStore.Presentation.Controllers
         public IActionResult DeleteGraphicsCard(Guid id)
         {
             _service.GraphicsCardService.DeleteGraphicsCard(id, trackChanges: false);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:guid}")]
+        public IActionResult UpdateGraphicsCard(Guid id, [FromBody] GraphicsCardForUpdateDto graphicsCardForUpdate)
+        {
+            if (graphicsCardForUpdate is null)
+                return BadRequest("GraphicsCardForUpdateDto object is null");
+
+            _service.GraphicsCardService.UpdateGraphicsCard(id, graphicsCardForUpdate, trackChanges: true);
 
             return NoContent();
         }

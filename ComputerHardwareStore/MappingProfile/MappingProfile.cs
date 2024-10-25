@@ -15,6 +15,8 @@ namespace ComputerHardwareStore.MappingProfile
 
             CreateMap<GraphicsCardForCreationDto, GraphicsCard>();
 
+            CreateMap<GraphicsCardForUpdateDto, GraphicsCard>();
+
             // GraphicsCardBenchmark
             CreateMap<GraphicsCardBenchmark, GraphicsCardBenchmarkDto>()
                 .ForMember(g => g.Id,
