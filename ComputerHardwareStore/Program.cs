@@ -50,6 +50,9 @@ namespace ComputerHardwareStore
             // Swagger Service
             builder.Services.ConfigureSwagger();
 
+            // FluentValidation Service
+            builder.Services.ConfigureFluentValidation();
+
             // Automapper service
             builder.Services.AddAutoMapper(typeof(Program));
 

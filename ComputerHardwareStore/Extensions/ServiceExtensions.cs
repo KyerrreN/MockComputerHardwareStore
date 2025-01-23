@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using FluentValidation;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
@@ -74,6 +75,10 @@ namespace ComputerHardwareStore.Extensions
         {
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+        }
+        public static void ConfigureFluentValidation(this IServiceCollection services)
+        {
+            services.AddValidatorsFromAssemblyContaining<Program>();
         }
     }
 }
