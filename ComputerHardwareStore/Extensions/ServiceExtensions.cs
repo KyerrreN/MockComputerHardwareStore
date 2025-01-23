@@ -1,10 +1,12 @@
-﻿using Contracts;
+﻿using ComputerHardwareStore.Presentation;
+using Contracts;
 using FluentValidation;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
 using Service.Contracts;
+using System.Reflection.Metadata;
 
 namespace ComputerHardwareStore.Extensions
 {
@@ -78,7 +80,7 @@ namespace ComputerHardwareStore.Extensions
         }
         public static void ConfigureFluentValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining<Program>();
+            services.AddValidatorsFromAssemblyContaining(typeof(ComputerHardwareStore.Presentation.AssemblyReference));
         }
     }
 }

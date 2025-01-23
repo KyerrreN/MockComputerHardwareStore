@@ -1,4 +1,5 @@
 ﻿using ComputerHardwareStore.Presentation.ModelBinders;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -6,15 +7,18 @@ using Shared.DataTransferObjects;
 namespace ComputerHardwareStore.Presentation.Controllers
 {
     [Route("api/graphicscards")]
-    //[ApiController]
+    [ApiController]
     public class GraphicsCardsController : ControllerBase
     {
         // DI
         private readonly IServiceManager _service;
+        private readonly IValidator<GraphicsCardForCreationDto> _postGraphicsCardValidator;
 
-        public GraphicsCardsController(IServiceManager service)
+        public GraphicsCardsController(IServiceManager service,
+                                       IValidator<GraphicsCardForCreationDto> postGraphicsCardValidator)
         {
             _service = service;
+            _postGraphicsCardValidator = postGraphicsCardValidator;
         }
 
         // Action Methods
@@ -49,6 +53,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
             {
                 return BadRequest("GraphicsCardForCreationDto object is null");
             }
+
+            _postGraphicsCardValidator.ValidateAndThrow(graphicsCard);
 
             var createdGraphicsCard = _service.GraphicsCardService.CreateGraphicsCard(graphicsCard);
 

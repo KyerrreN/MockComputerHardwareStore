@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 using Entities.ErrorModel;
 using Entities.Exceptions;
+using FluentValidation;
 
 namespace ComputerHardwareStore.Extensions
 {
@@ -25,6 +26,7 @@ namespace ComputerHardwareStore.Extensions
                         {
                             NotFoundException => StatusCodes.Status404NotFound,
                             BadRequestException => StatusCodes.Status400BadRequest,
+                            ValidationException => StatusCodes.Status422UnprocessableEntity,
                             _ => StatusCodes.Status500InternalServerError
                         };
 
