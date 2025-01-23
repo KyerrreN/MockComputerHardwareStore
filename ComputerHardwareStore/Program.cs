@@ -47,6 +47,9 @@ namespace ComputerHardwareStore
                 options.SuppressModelStateInvalidFilter = true;
             });
 
+            // Swagger Service
+            builder.Services.ConfigureSwagger();
+
             // Automapper service
             builder.Services.AddAutoMapper(typeof(Program));
 
@@ -73,6 +76,9 @@ namespace ComputerHardwareStore
             {
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
 

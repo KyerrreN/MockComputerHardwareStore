@@ -68,5 +68,12 @@ namespace ComputerHardwareStore.Extensions
                 config.OutputFormatters.Add(new CsvOutputFormatter());
             });
         }
+
+        // Add swagger
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
+        }
     }
 }
