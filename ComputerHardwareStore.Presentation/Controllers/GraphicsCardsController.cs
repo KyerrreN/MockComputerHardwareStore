@@ -14,14 +14,17 @@ namespace ComputerHardwareStore.Presentation.Controllers
         private readonly IServiceManager _service;
         private readonly IValidator<GraphicsCardForCreationDto> _postGraphicsCardValidator;
         private readonly IValidator<GraphicsCardForUpdateDto> _putGraphicsCardValidator;
+        private readonly IValidator<IEnumerable<GraphicsCardForCreationDto>> _postGraphicsCardCollectionValidator;
 
         public GraphicsCardsController(IServiceManager service,
                                        IValidator<GraphicsCardForCreationDto> postGraphicsCardValidator,
-                                       IValidator<GraphicsCardForUpdateDto> putGraphicsCardValidator)
+                                       IValidator<GraphicsCardForUpdateDto> putGraphicsCardValidator,
+                                       IValidator<IEnumerable<GraphicsCardForCreationDto>> postGraphicsCardCollectionValidator)
         {
             _service = service;
             _postGraphicsCardValidator = postGraphicsCardValidator;
             _putGraphicsCardValidator = putGraphicsCardValidator;
+            _postGraphicsCardCollectionValidator = postGraphicsCardCollectionValidator;
         }
 
         // Action Methods
@@ -67,6 +70,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         [HttpPost("collection")]
         public IActionResult CreateGraphicsCardCollection([FromBody] IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
         {
+            _postGraphicsCardCollectionValidator.ValidateAndThrow(graphicsCardCollection);
+
             var result = _service.GraphicsCardService.CreateGraphicsCardCollection(graphicsCardCollection);
 
             return CreatedAtRoute("GraphicsCardCollection", new { result.ids }, result.graphicsCards);
