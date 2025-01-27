@@ -13,12 +13,15 @@ namespace ComputerHardwareStore.Presentation.Controllers
         // DI
         private readonly IServiceManager _service;
         private readonly IValidator<GraphicsCardForCreationDto> _postGraphicsCardValidator;
+        private readonly IValidator<GraphicsCardForUpdateDto> _putGraphicsCardValidator;
 
         public GraphicsCardsController(IServiceManager service,
-                                       IValidator<GraphicsCardForCreationDto> postGraphicsCardValidator)
+                                       IValidator<GraphicsCardForCreationDto> postGraphicsCardValidator,
+                                       IValidator<GraphicsCardForUpdateDto> putGraphicsCardValidator)
         {
             _service = service;
             _postGraphicsCardValidator = postGraphicsCardValidator;
+            _putGraphicsCardValidator = putGraphicsCardValidator;
         }
 
         // Action Methods
@@ -82,6 +85,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         {
             if (graphicsCardForUpdate is null)
                 return BadRequest("GraphicsCardForUpdateDto object is null");
+
+            _putGraphicsCardValidator.ValidateAndThrow(graphicsCardForUpdate);
 
             _service.GraphicsCardService.UpdateGraphicsCard(id, graphicsCardForUpdate, trackChanges: true);
 
