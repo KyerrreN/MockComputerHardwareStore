@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -15,9 +16,12 @@ namespace ComputerHardwareStore.Presentation.Controllers
     public class GraphicsCardBenchmarkController : ControllerBase
     {
         private readonly IServiceManager _service;
-        public GraphicsCardBenchmarkController(IServiceManager service)
+        private readonly IValidator<GraphicsCardBenchmarkForCreationDto> _postValidator;
+        public GraphicsCardBenchmarkController(IServiceManager service,
+                                               IValidator<GraphicsCardBenchmarkForCreationDto> postValidator)
         {
             _service = service;
+            _postValidator = postValidator;
         }
 
         [HttpGet]
@@ -41,6 +45,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         {
             if (graphicsCardBenchmark is null)
                 return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
+
+            _postValidator.ValidateAndThrow(graphicsCardBenchmark);
 
             var graphicsCardBenchmarkToReturn = _service.GraphicsCardBenchmarkService.CreateGraphicsCardBenchmark(graphicsCardId,
                                                                                                          id,

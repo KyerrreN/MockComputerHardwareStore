@@ -70,6 +70,9 @@ namespace ComputerHardwareStore.Presentation.Validators
                 .WithMessage("{PropertyName} is required")
                 .GreaterThanOrEqualTo(0)
                 .WithMessage("{PropertyName} cannot be less than {ComparisonValue}");
+
+            RuleForEach(x => x.GraphicsCardBenchmarks)
+                .SetValidator(new GraphicsCardBenchmarkForCreationValidator());
         }
     }
 }
