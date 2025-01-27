@@ -105,7 +105,6 @@ namespace Service
             if (graphicsCardEntity is null)
                 throw new GraphicsCardNotFoundException(graphicsCardId);
 
-            // Not sure if its the right way
             foreach (var benchmark in graphicsCardForUpdate.GraphicsCardBenchmarks)
             {
                 var found = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmark.BenchmarkId, false);
