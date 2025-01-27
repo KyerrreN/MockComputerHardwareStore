@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -14,10 +15,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
     public class BenchmarkController : ControllerBase
     {
         private readonly IServiceManager _service;
+        private readonly IValidator<BenchmarkForCreationDto> _postValidator;
 
-        public BenchmarkController(IServiceManager service)
+        public BenchmarkController(IServiceManager service,
+                                   IValidator<BenchmarkForCreationDto> postValidator)
         {
             _service = service;
+            _postValidator = postValidator;
         }
 
         [HttpGet]
@@ -41,6 +45,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         {
             if (bechmark is null)
                 return BadRequest("BenchmarkDto object is null");
+
+            _postValidator.ValidateAndThrow(bechmark);
 
             var createdBenchmark = _service.BenchmarkService.CreateBenchmark(bechmark);
 
