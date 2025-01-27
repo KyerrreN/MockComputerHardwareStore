@@ -3,11 +3,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ComputerHardwareStore.Presentation.Controllers
 {
@@ -17,11 +12,14 @@ namespace ComputerHardwareStore.Presentation.Controllers
     {
         private readonly IServiceManager _service;
         private readonly IValidator<GraphicsCardBenchmarkForCreationDto> _postValidator;
+        private readonly IValidator<GraphicsCardBenchmarkForUpdateDto> _putValidator;
         public GraphicsCardBenchmarkController(IServiceManager service,
-                                               IValidator<GraphicsCardBenchmarkForCreationDto> postValidator)
+                                               IValidator<GraphicsCardBenchmarkForCreationDto> postValidator,
+                                               IValidator<GraphicsCardBenchmarkForUpdateDto> putValidator)
         {
             _service = service;
             _postValidator = postValidator;
+            _putValidator = putValidator;
         }
 
         [HttpGet]
@@ -71,6 +69,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         {
             if (graphicsCardBenchmark is null)
                 return BadRequest("GraphicsCardBenchmarkForUpdateDto object is null");
+
+            _putValidator.ValidateAndThrow(graphicsCardBenchmark);
 
             _service.GraphicsCardBenchmarkService.UpdateGraphicsCardBenchmark(graphicsCardId,
                                                                               id,
