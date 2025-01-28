@@ -4,11 +4,6 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -27,30 +22,30 @@ namespace Service
             _logger = logger;
         }
 
-        public BenchmarkDto CreateBenchmark(BenchmarkForCreationDto benchmark)
+        public async Task<BenchmarkDto> CreateBenchmarkAsync(BenchmarkForCreationDto benchmark)
         {
             var benchmarkEntity = _mapper.Map<Benchmark>(benchmark);
 
             _repository.Benchmark.CreateBenchmark(benchmarkEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var benchmarkToReturn = _mapper.Map<BenchmarkDto>(benchmarkEntity);
 
             return benchmarkToReturn;
         }
 
-        public IEnumerable<BenchmarkDto> GetAllBenchmarks(bool trackChanges)
+        public async Task<IEnumerable<BenchmarkDto>> GetAllBenchmarksAsync(bool trackChanges)
         {
-            var benchmarks = _repository.Benchmark.GetBenchmarks(trackChanges);
+            var benchmarks = await _repository.Benchmark.GetBenchmarksAsync(trackChanges);
 
             var benchmarksDto = _mapper.Map<IEnumerable<BenchmarkDto>>(benchmarks);
 
             return benchmarksDto;
         }
 
-        public BenchmarkDto GetBenchmark(int id, bool trackChanges)
+        public async Task<BenchmarkDto> GetBenchmarkAsync(int id, bool trackChanges)
         {
-            var benchmark = _repository.Benchmark.GetBenchmark(id, trackChanges);
+            var benchmark = await _repository.Benchmark.GetBenchmarkAsync(id, trackChanges);
 
             if (benchmark is null)
                 throw new BenchmarkNotFoundException(id);

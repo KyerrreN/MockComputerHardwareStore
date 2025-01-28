@@ -29,31 +29,31 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         // Action Methods
         [HttpGet]
-        public IActionResult GetGraphicsCards()
+        public async Task<IActionResult> GetGraphicsCards()
         {
-            var graphicsCards = _service.GraphicsCardService.GetAllGraphicsCards(trackChanges: false);
+            var graphicsCards = await _service.GraphicsCardService.GetAllGraphicsCardsAsync(trackChanges: false);
 
             return Ok(graphicsCards);
         }
 
         [HttpGet("{id:guid}", Name = "GraphicsCardById")]
-        public IActionResult GetGraphicsCard(Guid id)
+        public async Task<IActionResult> GetGraphicsCard(Guid id)
         {
-            var graphicsCard = _service.GraphicsCardService.GetGraphicsCard(id, trackChanges: false);
+            var graphicsCard = await _service.GraphicsCardService.GetGraphicsCardAsync(id, trackChanges: false);
 
             return Ok(graphicsCard);
         }
 
         [HttpGet("collection/({ids})", Name = "GraphicsCardCollection")]
-        public IActionResult GetGraphicsCardCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+        public async Task<IActionResult> GetGraphicsCardCollection([ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
         {
-            var graphicsCardCollection = _service.GraphicsCardService.GetByIds(ids, trackChanges: false);
+            var graphicsCardCollection = await _service.GraphicsCardService.GetByIdsAsync(ids, trackChanges: false);
 
             return Ok(graphicsCardCollection);
         }
 
         [HttpPost]
-        public IActionResult CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
+        public async Task<IActionResult> CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
         {
             if (graphicsCard is null)
             {
@@ -62,38 +62,38 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
             _postGraphicsCardValidator.ValidateAndThrow(graphicsCard);
 
-            var createdGraphicsCard = _service.GraphicsCardService.CreateGraphicsCard(graphicsCard);
+            var createdGraphicsCard = await _service.GraphicsCardService.CreateGraphicsCardAsync(graphicsCard);
 
             return CreatedAtRoute("GraphicsCardById", new { id = createdGraphicsCard.Id }, createdGraphicsCard);
         }
 
         [HttpPost("collection")]
-        public IActionResult CreateGraphicsCardCollection([FromBody] IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
+        public async Task<IActionResult> CreateGraphicsCardCollection([FromBody] IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
         {
             _postGraphicsCardCollectionValidator.ValidateAndThrow(graphicsCardCollection);
 
-            var result = _service.GraphicsCardService.CreateGraphicsCardCollection(graphicsCardCollection);
+            var result = await _service.GraphicsCardService.CreateGraphicsCardCollectionAsync(graphicsCardCollection);
 
             return CreatedAtRoute("GraphicsCardCollection", new { result.ids }, result.graphicsCards);
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult DeleteGraphicsCard(Guid id)
+        public async Task<IActionResult> DeleteGraphicsCard(Guid id)
         {
-            _service.GraphicsCardService.DeleteGraphicsCard(id, trackChanges: false);
+            await _service.GraphicsCardService.DeleteGraphicsCardAsync(id, trackChanges: false);
 
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public IActionResult UpdateGraphicsCard(Guid id, [FromBody] GraphicsCardForUpdateDto graphicsCardForUpdate)
+        public async Task<IActionResult> UpdateGraphicsCard(Guid id, [FromBody] GraphicsCardForUpdateDto graphicsCardForUpdate)
         {
             if (graphicsCardForUpdate is null)
                 return BadRequest("GraphicsCardForUpdateDto object is null");
 
             _putGraphicsCardValidator.ValidateAndThrow(graphicsCardForUpdate);
 
-            _service.GraphicsCardService.UpdateGraphicsCard(id, graphicsCardForUpdate, trackChanges: true);
+            await _service.GraphicsCardService.UpdateGraphicsCardAsync(id, graphicsCardForUpdate, trackChanges: true);
 
             return NoContent();
         }

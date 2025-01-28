@@ -9,8 +9,8 @@ namespace Contracts
 {
     public interface IBenchmarkRepository
     {
-        IEnumerable<Benchmark> GetBenchmarks(bool trackChanges);
-        Benchmark GetBenchmark(int benchmarkId, bool trackChanges);
+        Task<IEnumerable<Benchmark>> GetBenchmarksAsync(bool trackChanges);
+        Task<Benchmark> GetBenchmarkAsync(int benchmarkId, bool trackChanges);
         void CreateBenchmark(Benchmark benchmark);
     }
 }

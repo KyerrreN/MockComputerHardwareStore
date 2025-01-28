@@ -1,11 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -16,20 +11,20 @@ namespace Repository
         {
             
         }
-        public IEnumerable<GraphicsCardBenchmark> GetBenchmarks(Guid graphicsCardId, bool trackChanges)
+        public async Task<IEnumerable<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId, bool trackChanges)
         {
-            return FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
+            return await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
                 .Include(gb => gb.GraphicsCard)
                 .Include(gb => gb.Benchmark)
                 .OrderBy(gb => gb.Fps)
-                .ToList();
+                .ToListAsync();
         }
-        public GraphicsCardBenchmark GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        public async Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {
-            return FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId) && gb.BenchmarkId.Equals(benchmarkId), trackChanges)
+            return await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId) && gb.BenchmarkId.Equals(benchmarkId), trackChanges)
                 .Include(gb => gb.Benchmark)
                 .Include(gb => gb.GraphicsCard)
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
         }
 
         public void CreateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmark benchmark)

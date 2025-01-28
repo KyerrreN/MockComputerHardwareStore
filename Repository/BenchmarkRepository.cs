@@ -1,10 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,16 +10,16 @@ namespace Repository
             : base (context)
         {
         }
-        public IEnumerable<Benchmark> GetBenchmarks(bool trackChanges)
+        public async Task<IEnumerable<Benchmark>> GetBenchmarksAsync(bool trackChanges)
         {
-            return FindAll(trackChanges)
+            return await FindAll(trackChanges)
                 .OrderBy(b => b.Id)
-                .ToList();
+                .ToListAsync();
         }
-        public Benchmark GetBenchmark(int benchmarkId, bool trackChanges)
+        public async Task<Benchmark> GetBenchmarkAsync(int benchmarkId, bool trackChanges)
         {
-            return FindByCondition(g => g.Id.Equals(benchmarkId), trackChanges)
-                .SingleOrDefault();
+            return await FindByCondition(g => g.Id.Equals(benchmarkId), trackChanges)
+                .SingleOrDefaultAsync();
         }
         public void CreateBenchmark(Benchmark benchmark)
         {

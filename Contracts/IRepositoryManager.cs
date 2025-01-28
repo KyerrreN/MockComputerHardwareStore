@@ -5,6 +5,6 @@
         IGraphicsCardRepository GraphicsCard { get; }
         IGraphicsCardBenchmarkRepository GraphicsCardBenchmark { get; }
         IBenchmarkRepository Benchmark { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

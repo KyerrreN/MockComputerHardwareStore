@@ -1,20 +1,15 @@
 ﻿using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Contracts
 {
     public interface IGraphicsCardService
     {
-        IEnumerable<GraphicsCardDto> GetAllGraphicsCards(bool trackChanges);
-        GraphicsCardDto GetGraphicsCard(Guid id, bool trackChanges);
-        GraphicsCardDto CreateGraphicsCard(GraphicsCardForCreationDto graphicsCard);
-        IEnumerable<GraphicsCardDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges);
-        (IEnumerable<GraphicsCardDto> graphicsCards, string ids) CreateGraphicsCardCollection(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection);
-        void DeleteGraphicsCard(Guid graphicsCardId, bool trackChanges);
-        void UpdateGraphicsCard(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges);
+        Task<IEnumerable<GraphicsCardDto>> GetAllGraphicsCardsAsync (bool trackChanges);
+        Task<GraphicsCardDto> GetGraphicsCardAsync(Guid id, bool trackChanges);
+        Task<GraphicsCardDto> CreateGraphicsCardAsync(GraphicsCardForCreationDto graphicsCard);
+        Task<IEnumerable<GraphicsCardDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges);
+        Task<(IEnumerable<GraphicsCardDto> graphicsCards, string ids)> CreateGraphicsCardCollectionAsync(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection);
+        Task DeleteGraphicsCardAsync(Guid graphicsCardId, bool trackChanges);
+        Task UpdateGraphicsCardAsync(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges);
     }
 }

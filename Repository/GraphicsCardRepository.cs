@@ -1,10 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,17 +10,17 @@ namespace Repository
         {
         }
 
-        public IEnumerable<GraphicsCard> GetAllGraphicsCards(bool trackChanges)
+        public async Task<IEnumerable<GraphicsCard>> GetAllGraphicsCardsAsync(bool trackChanges)
         {
-            return FindAll(trackChanges)
+            return await FindAll(trackChanges)
                 .OrderBy(g => g.Manufacturer)
-                .ToList();
+                .ToListAsync();
         }
 
-        public GraphicsCard GetGraphicsCard(Guid id, bool trackChanges)
+        public async Task<GraphicsCard> GetGraphicsCardAsync(Guid id, bool trackChanges)
         {
-            return FindByCondition(g => g.Id.Equals(id), trackChanges)
-                .SingleOrDefault();
+            return await FindByCondition(g => g.Id.Equals(id), trackChanges)
+                .SingleOrDefaultAsync();
         }
 
         public void CreateGraphicsCard(GraphicsCard graphicsCard)
@@ -32,10 +28,10 @@ namespace Repository
             Create(graphicsCard);
         }
 
-        public IEnumerable<GraphicsCard> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        public async Task<IEnumerable<GraphicsCard>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
-            return FindByCondition(g => ids.Contains(g.Id), trackChanges)
-                .ToList();
+            return await FindByCondition(g => ids.Contains(g.Id), trackChanges)
+                .ToListAsync();
         }
 
         public void DeleteGraphicsCard(GraphicsCard graphicsCard)

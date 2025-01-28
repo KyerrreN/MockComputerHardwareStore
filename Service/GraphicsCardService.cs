@@ -22,18 +22,18 @@ namespace Service
             _mapper = mapper;
         }
 
-        public IEnumerable<GraphicsCardDto> GetAllGraphicsCards(bool trackChanges)
+        public async Task<IEnumerable<GraphicsCardDto>> GetAllGraphicsCardsAsync(bool trackChanges)
         {
-            var graphicsCards = _repository.GraphicsCard.GetAllGraphicsCards(trackChanges);
+            var graphicsCards = await _repository.GraphicsCard.GetAllGraphicsCardsAsync(trackChanges);
 
             var graphicsCardsDto = _mapper.Map<IEnumerable<GraphicsCardDto>>(graphicsCards);
 
             return graphicsCardsDto;
         }
 
-        public GraphicsCardDto GetGraphicsCard(Guid id, bool trackChanges)
+        public async Task<GraphicsCardDto> GetGraphicsCardAsync(Guid id, bool trackChanges)
         {
-            var graphicsCard = _repository.GraphicsCard.GetGraphicsCard(id, trackChanges);
+            var graphicsCard = await _repository.GraphicsCard.GetGraphicsCardAsync(id, trackChanges);
 
             if (graphicsCard is null)
             {
@@ -44,24 +44,24 @@ namespace Service
             return graphicsCardDto;
         }
 
-        public GraphicsCardDto CreateGraphicsCard(GraphicsCardForCreationDto graphicsCard)
+        public async Task<GraphicsCardDto> CreateGraphicsCardAsync(GraphicsCardForCreationDto graphicsCard)
         {
             var graphicsCardEntity = _mapper.Map<GraphicsCard>(graphicsCard);
 
             _repository.GraphicsCard.CreateGraphicsCard(graphicsCardEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var graphicsCardToReturn = _mapper.Map<GraphicsCardDto>(graphicsCardEntity);
 
             return graphicsCardToReturn;
         }
 
-        public IEnumerable<GraphicsCardDto> GetByIds(IEnumerable<Guid> ids, bool trackChanges)
+        public async Task<IEnumerable<GraphicsCardDto>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
         {
             if (ids is null)
                 throw new IdParametersBadRequestException();
 
-            var graphicsCards = _repository.GraphicsCard.GetByIds(ids, trackChanges);
+            var graphicsCards = await _repository.GraphicsCard.GetByIdsAsync(ids, trackChanges);
 
             if (ids.Count() != graphicsCards.Count())
                 throw new CollectionByIdsBadRequestException();
@@ -71,7 +71,7 @@ namespace Service
             return graphicsCardsDto;
         }
 
-        public (IEnumerable<GraphicsCardDto> graphicsCards, string ids) CreateGraphicsCardCollection(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
+        public async Task<(IEnumerable<GraphicsCardDto> graphicsCards, string ids)> CreateGraphicsCardCollectionAsync(IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
         {
             if (graphicsCardCollection is null)
                 throw new GraphicsCardCollectionBadRequest();
@@ -81,7 +81,7 @@ namespace Service
             {
                 _repository.GraphicsCard.CreateGraphicsCard(graphicsCard);
             }
-            _repository.Save();
+            await _repository.SaveAsync();
 
             var graphicsCardCollectionToReturn = _mapper.Map<IEnumerable<GraphicsCardDto>>(graphicsCardEntities);
             var ids = string.Join(',', graphicsCardCollectionToReturn.Select(g => g.Id));
@@ -89,32 +89,32 @@ namespace Service
             return (graphicsCards: graphicsCardCollectionToReturn, ids: ids);
         }
 
-        public void DeleteGraphicsCard(Guid graphicsCardId, bool trackChanges)
+        public async Task DeleteGraphicsCardAsync(Guid graphicsCardId, bool trackChanges)
         {
-            var graphicsCardEntity = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+            var graphicsCardEntity = await _repository.GraphicsCard.GetGraphicsCardAsync(graphicsCardId, trackChanges);
             if (graphicsCardEntity is null)
                 throw new GraphicsCardNotFoundException(graphicsCardId);
 
             _repository.GraphicsCard.DeleteGraphicsCard(graphicsCardEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public void UpdateGraphicsCard(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges)
+        public async Task UpdateGraphicsCardAsync(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges)
         {
-            var graphicsCardEntity = _repository.GraphicsCard.GetGraphicsCard(graphicsCardId, trackChanges);
+            var graphicsCardEntity = await _repository.GraphicsCard.GetGraphicsCardAsync(graphicsCardId, trackChanges);
             if (graphicsCardEntity is null)
                 throw new GraphicsCardNotFoundException(graphicsCardId);
 
             foreach (var benchmark in graphicsCardForUpdate.GraphicsCardBenchmarks)
             {
-                var found = _repository.GraphicsCardBenchmark.GetBenchmark(graphicsCardId, benchmark.BenchmarkId, false);
+                var found = await _repository.GraphicsCardBenchmark.GetBenchmarkAsync(graphicsCardId, benchmark.BenchmarkId, false);
 
                 if (found is not null)
                     throw new GraphicsCardBenchmarkFoundException(graphicsCardId, benchmark.BenchmarkId);
             }
 
             _mapper.Map(graphicsCardForUpdate, graphicsCardEntity);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
     }
 }

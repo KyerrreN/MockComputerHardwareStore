@@ -30,9 +30,9 @@ namespace Repository
         public IBenchmarkRepository Benchmark => _benchmarkRepository.Value;
 
         // Method to save changes
-        public void Save()
+        public async Task SaveAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

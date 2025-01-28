@@ -23,30 +23,31 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetGraphicsCardBenchmarks(Guid graphicsCardId)
+        public async Task<IActionResult> GetGraphicsCardBenchmarks(Guid graphicsCardId)
         {
-            var benchmarks = _service.GraphicsCardBenchmarkService.GetBenchmarks(graphicsCardId, trackChanges: false);
+            var benchmarks = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, trackChanges: false);
 
             return Ok(benchmarks);
         }
 
         [HttpGet("{id:int}", Name = "GetGraphicsCardBenchmark")]
-        public IActionResult GetGraphicsCardBenchmark(Guid graphicsCardId, int id)
+        public async Task<IActionResult> GetGraphicsCardBenchmark(Guid graphicsCardId, int id)
         {
-            var benchmark = _service.GraphicsCardBenchmarkService.GetBenchmark(graphicsCardId, id, trackChanges: false);
+            var benchmark = await _service.GraphicsCardBenchmarkService.GetBenchmarkAsync(graphicsCardId, id, trackChanges: false);
 
             return Ok(benchmark);
         }
 
         [HttpPost("{id:int}")]
-        public IActionResult CreateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
+        public async Task<IActionResult> CreateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
         {
             if (graphicsCardBenchmark is null)
                 return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
 
             _postValidator.ValidateAndThrow(graphicsCardBenchmark);
 
-            var graphicsCardBenchmarkToReturn = _service.GraphicsCardBenchmarkService.CreateGraphicsCardBenchmark(graphicsCardId,
+            var graphicsCardBenchmarkToReturn = await _service.GraphicsCardBenchmarkService.CreateGraphicsCardBenchmarkAsync
+                                                                                                        (graphicsCardId,
                                                                                                          id,
                                                                                                          graphicsCardBenchmark,
                                                                                                          trackChanges: false);
@@ -57,41 +58,41 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteGraphicsCardBenchmark(Guid graphicsCardId, int id)
+        public async Task<IActionResult> DeleteGraphicsCardBenchmark(Guid graphicsCardId, int id)
         {
-            _service.GraphicsCardBenchmarkService.DeleteBenchmarkForGraphicsCard(graphicsCardId, id, false);
+            await _service.GraphicsCardBenchmarkService.DeleteBenchmarkForGraphicsCardAsync(graphicsCardId, id, false);
 
             return NoContent();
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
+        public async Task<IActionResult> UpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
         {
             if (graphicsCardBenchmark is null)
                 return BadRequest("GraphicsCardBenchmarkForUpdateDto object is null");
 
             _putValidator.ValidateAndThrow(graphicsCardBenchmark);
 
-            _service.GraphicsCardBenchmarkService.UpdateGraphicsCardBenchmark(graphicsCardId,
-                                                                              id,
-                                                                              graphicsCardBenchmark,
-                                                                              gdTrackChanges: false,
-                                                                              bnTrackChanges: true);
+            await _service.GraphicsCardBenchmarkService.UpdateGraphicsCardBenchmarkAsync(graphicsCardId,
+                                                                                         id,
+                                                                                         graphicsCardBenchmark,
+                                                                                         gdTrackChanges: false,
+                                                                                         bnTrackChanges: true);
 
             return NoContent();
         }
 
         [HttpPatch("{id:int}")]
-        public IActionResult PartiallyUpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] JsonPatchDocument<GraphicsCardBenchmarkForUpdateDto> patchDoc)
+        public async Task<IActionResult> PartiallyUpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] JsonPatchDocument<GraphicsCardBenchmarkForUpdateDto> patchDoc)
         {
             if (patchDoc is null)
                 return BadRequest("PatchDoc object sent from a client is null");
 
-            var result = _service.GraphicsCardBenchmarkService.GetGraphicsCardBenchmarkForPatch(graphicsCardId, id, false, true);
+            var result = await _service.GraphicsCardBenchmarkService.GetGraphicsCardBenchmarkForPatchAsync(graphicsCardId, id, false, true);
 
             patchDoc.ApplyTo(result.graphicsCardBenchmarkToPatch);
 
-            _service.GraphicsCardBenchmarkService.SaveChangesForPatch(result.graphicsCardBenchmarkToPatch, result.graphicsCardBenchmarkEntity);
+            await _service.GraphicsCardBenchmarkService.SaveChangesForPatchAsync(result.graphicsCardBenchmarkToPatch, result.graphicsCardBenchmarkEntity);
 
             return NoContent();
         }

@@ -1,27 +1,22 @@
 ﻿using Entities.Models;
 using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service.Contracts
 {
     public interface IGraphicsCardBenchmarkService
     {
-        IEnumerable<GraphicsCardBenchmarkDto> GetBenchmarks(Guid grapicsCardId, bool trackChanges);
-        GraphicsCardBenchmarkDto GetBenchmark(Guid graphicsCardId, int benchmarkId, bool trackChanges);
-        GraphicsCardBenchmarkDto CreateGraphicsCardBenchmark(Guid graphicsCardId,
+        Task<IEnumerable<GraphicsCardBenchmarkDto>> GetBenchmarksAsync(Guid grapicsCardId, bool trackChanges);
+        Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges);
+        Task<GraphicsCardBenchmarkDto> CreateGraphicsCardBenchmarkAsync(Guid graphicsCardId,
                                                              int benchmarkId,
                                                              GraphicsCardBenchmarkForCreationDto benchmark,
                                                              bool trackChanges);
-        void DeleteBenchmarkForGraphicsCard(Guid graphicsCardId, int benchmarkId, bool trackChanges);
-        void UpdateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges);
+        Task DeleteBenchmarkForGraphicsCardAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges);
+        Task UpdateGraphicsCardBenchmarkAsync(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges);
 
-        (GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity)
-            GetGraphicsCardBenchmarkForPatch(Guid graphicsCardId, int benchmarkId, bool gcTrackChanges, bool benchTrackChanges);
+        Task<(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity)>
+            GetGraphicsCardBenchmarkForPatchAsync(Guid graphicsCardId, int benchmarkId, bool gcTrackChanges, bool benchTrackChanges);
 
-        void SaveChangesForPatch(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity);
+        Task SaveChangesForPatchAsync(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity);
     }
 }
