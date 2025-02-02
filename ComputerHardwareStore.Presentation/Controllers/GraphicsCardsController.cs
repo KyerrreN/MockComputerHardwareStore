@@ -1,4 +1,5 @@
-﻿using ComputerHardwareStore.Presentation.ModelBinders;
+﻿using ComputerHardwareStore.Presentation.ActionFilters;
+using ComputerHardwareStore.Presentation.ModelBinders;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -53,12 +54,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
         {
-            if (graphicsCard is null)
-            {
-                return BadRequest("GraphicsCardForCreationDto object is null");
-            }
+            //if (graphicsCard is null)
+            //{
+            //    return BadRequest("GraphicsCardForCreationDto object is null");
+            //}
 
             _postGraphicsCardValidator.ValidateAndThrow(graphicsCard);
 
@@ -86,10 +88,11 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> UpdateGraphicsCard(Guid id, [FromBody] GraphicsCardForUpdateDto graphicsCardForUpdate)
         {
-            if (graphicsCardForUpdate is null)
-                return BadRequest("GraphicsCardForUpdateDto object is null");
+            //if (graphicsCardForUpdate is null)
+            //    return BadRequest("GraphicsCardForUpdateDto object is null");
 
             _putGraphicsCardValidator.ValidateAndThrow(graphicsCardForUpdate);
 

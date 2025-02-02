@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ComputerHardwareStore.Presentation.ActionFilters;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -36,10 +37,11 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateBenchmark([FromBody] BenchmarkForCreationDto bechmark)
         {
-            if (bechmark is null)
-                return BadRequest("BenchmarkDto object is null");
+            //if (bechmark is null)
+            //    return BadRequest("BenchmarkDto object is null");
 
             _postValidator.ValidateAndThrow(bechmark);
 

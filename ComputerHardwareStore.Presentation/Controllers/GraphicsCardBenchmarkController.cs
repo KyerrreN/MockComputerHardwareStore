@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ComputerHardwareStore.Presentation.ActionFilters;
+using FluentValidation;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -39,10 +40,11 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPost("{id:int}")]
+        [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
         {
-            if (graphicsCardBenchmark is null)
-                return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
+            //if (graphicsCardBenchmark is null)
+            //    return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
 
             _postValidator.ValidateAndThrow(graphicsCardBenchmark);
 
@@ -66,10 +68,11 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> UpdateGraphicsCardBenchmark(Guid graphicsCardId, int id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
         {
-            if (graphicsCardBenchmark is null)
-                return BadRequest("GraphicsCardBenchmarkForUpdateDto object is null");
+            //if (graphicsCardBenchmark is null)
+            //    return BadRequest("GraphicsCardBenchmarkForUpdateDto object is null");
 
             _putValidator.ValidateAndThrow(graphicsCardBenchmark);
 

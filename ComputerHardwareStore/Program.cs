@@ -1,4 +1,5 @@
 using ComputerHardwareStore.Extensions;
+using ComputerHardwareStore.Presentation.ActionFilters;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +30,11 @@ namespace ComputerHardwareStore
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
 
+            // Action Filter
+            builder.Services.AddScoped<BindingValidationFilterAttribute>();
+
             // Configure to accept headers from 
             // HTTP request and adding XML formatter
-
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
