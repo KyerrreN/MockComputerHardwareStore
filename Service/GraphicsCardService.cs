@@ -33,12 +33,7 @@ namespace Service
 
         public async Task<GraphicsCardDto> GetGraphicsCardAsync(Guid id, bool trackChanges)
         {
-            var graphicsCard = await _repository.GraphicsCard.GetGraphicsCardAsync(id, trackChanges);
-
-            if (graphicsCard is null)
-            {
-                throw new GraphicsCardNotFoundException(id);
-            }
+            var graphicsCard = await GetGraphicsCardAndCheckIfItExists(id, trackChanges);
 
             var graphicsCardDto = _mapper.Map<GraphicsCardDto>(graphicsCard);
             return graphicsCardDto;
@@ -91,9 +86,7 @@ namespace Service
 
         public async Task DeleteGraphicsCardAsync(Guid graphicsCardId, bool trackChanges)
         {
-            var graphicsCardEntity = await _repository.GraphicsCard.GetGraphicsCardAsync(graphicsCardId, trackChanges);
-            if (graphicsCardEntity is null)
-                throw new GraphicsCardNotFoundException(graphicsCardId);
+            var graphicsCardEntity = await GetGraphicsCardAndCheckIfItExists(graphicsCardId, trackChanges);
 
             _repository.GraphicsCard.DeleteGraphicsCard(graphicsCardEntity);
             await _repository.SaveAsync();
@@ -101,9 +94,7 @@ namespace Service
 
         public async Task UpdateGraphicsCardAsync(Guid graphicsCardId, GraphicsCardForUpdateDto graphicsCardForUpdate, bool trackChanges)
         {
-            var graphicsCardEntity = await _repository.GraphicsCard.GetGraphicsCardAsync(graphicsCardId, trackChanges);
-            if (graphicsCardEntity is null)
-                throw new GraphicsCardNotFoundException(graphicsCardId);
+            var graphicsCardEntity = await GetGraphicsCardAndCheckIfItExists(graphicsCardId, trackChanges);
 
             foreach (var benchmark in graphicsCardForUpdate.GraphicsCardBenchmarks)
             {
@@ -115,6 +106,18 @@ namespace Service
 
             _mapper.Map(graphicsCardForUpdate, graphicsCardEntity);
             await _repository.SaveAsync();
+        }
+
+        private async Task<GraphicsCard> GetGraphicsCardAndCheckIfItExists(Guid id, bool trackChanges)
+        {
+            var graphicsCard = await _repository.GraphicsCard.GetGraphicsCardAsync(id, trackChanges);
+
+            if (graphicsCard is null)
+            {
+                throw new GraphicsCardNotFoundException(id);
+            }
+
+            return graphicsCard;
         }
     }
 }
