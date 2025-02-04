@@ -12,15 +12,17 @@ namespace Repository
         {
             
         }
-        public async Task<IEnumerable<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId, GraphicsCardBenchmarkParameters parameters, bool trackChanges)
+        public async Task<PagedList<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId, GraphicsCardBenchmarkParameters parameters, bool trackChanges)
         {
-            return await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
+            var benchmarks = await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
                 .Include(gb => gb.GraphicsCard)
                 .Include(gb => gb.Benchmark)
                 .OrderBy(gb => gb.Fps)
-                .Skip((parameters.PageNumber - 1) * parameters.PageSize)
-                .Take(parameters.PageSize)
                 .ToListAsync();
+
+            return PagedList<GraphicsCardBenchmark>
+                .ToPagedList(benchmarks, parameters.PageNumber, parameters.PageSize);
+                
         }
         public async Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {

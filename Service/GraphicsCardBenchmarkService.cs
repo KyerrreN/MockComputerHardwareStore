@@ -23,22 +23,17 @@ namespace Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GraphicsCardBenchmarkDto>> GetBenchmarksAsync(Guid grapicsCardId,
+        public async Task<(IEnumerable<GraphicsCardBenchmarkDto> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
                                                                                     GraphicsCardBenchmarkParameters parameters,
                                                                                     bool trackChanges)
         {
             await CheckIfGraphicsCardExists(grapicsCardId, trackChanges);
 
-            var benchmarks = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
+            var benchmarksWithMetaData = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
 
-            if (benchmarks is null || !benchmarks.Any())
-            {
-                throw new GraphicsCardBenchmarkNotFoundException(grapicsCardId);
-            }
+            var benchmarksDto = _mapper.Map<IEnumerable<GraphicsCardBenchmarkDto>>(benchmarksWithMetaData);
 
-            var benchmarksDto = _mapper.Map<IEnumerable<GraphicsCardBenchmarkDto>>(benchmarks);
-
-            return benchmarksDto;
+            return (benchmarks: benchmarksDto, metaData: benchmarksWithMetaData.MetaData);
         }
         public async Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {

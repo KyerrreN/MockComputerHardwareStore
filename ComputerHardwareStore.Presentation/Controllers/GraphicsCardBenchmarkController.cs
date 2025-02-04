@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Text.Json;
 
 namespace ComputerHardwareStore.Presentation.Controllers
 {
@@ -28,9 +29,11 @@ namespace ComputerHardwareStore.Presentation.Controllers
         public async Task<IActionResult> GetGraphicsCardBenchmarks(Guid graphicsCardId,
                                                                    [FromQuery] GraphicsCardBenchmarkParameters parameters)
         {
-            var benchmarks = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, parameters, trackChanges: false);
+            var pagedResult = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, parameters, trackChanges: false);
 
-            return Ok(benchmarks);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+
+            return Ok(pagedResult.benchmarks);
         }
 
         [HttpGet("{id:int}", Name = "GetGraphicsCardBenchmark")]

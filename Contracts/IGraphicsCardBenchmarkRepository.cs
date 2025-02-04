@@ -5,7 +5,7 @@ namespace Contracts
 {
     public interface IGraphicsCardBenchmarkRepository
     {
-        Task<IEnumerable<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId,
+        Task<PagedList<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId,
                                                                     GraphicsCardBenchmarkParameters parameters,
                                                                     bool trackChanges);
         Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges);
