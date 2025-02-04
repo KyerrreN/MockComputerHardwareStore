@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace Service
 {
@@ -22,11 +23,13 @@ namespace Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<GraphicsCardBenchmarkDto>> GetBenchmarksAsync(Guid grapicsCardId, bool trackChanges)
+        public async Task<IEnumerable<GraphicsCardBenchmarkDto>> GetBenchmarksAsync(Guid grapicsCardId,
+                                                                                    GraphicsCardBenchmarkParameters parameters,
+                                                                                    bool trackChanges)
         {
             await CheckIfGraphicsCardExists(grapicsCardId, trackChanges);
 
-            var benchmarks = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, trackChanges);
+            var benchmarks = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
 
             if (benchmarks is null || !benchmarks.Any())
             {

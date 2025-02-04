@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace ComputerHardwareStore.Presentation.Controllers
 {
@@ -24,9 +25,10 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetGraphicsCardBenchmarks(Guid graphicsCardId)
+        public async Task<IActionResult> GetGraphicsCardBenchmarks(Guid graphicsCardId,
+                                                                   [FromQuery] GraphicsCardBenchmarkParameters parameters)
         {
-            var benchmarks = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, trackChanges: false);
+            var benchmarks = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, parameters, trackChanges: false);
 
             return Ok(benchmarks);
         }
