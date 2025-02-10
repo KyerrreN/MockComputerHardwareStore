@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 using Shared.RequestFeatures;
 
 namespace Repository
@@ -15,17 +16,18 @@ namespace Repository
         public async Task<PagedList<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId, GraphicsCardBenchmarkParameters parameters, bool trackChanges)
         {
             var benchmarks = await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId)
-                                                   && gb.Fps >= parameters.MinFps
-                                                   && gb.Fps <= parameters.MaxFps
+                                                   //&& gb.Fps >= parameters.MinFps
+                                                   //&& gb.Fps <= parameters.MaxFps
                                                    , trackChanges)
+                .FilterGraphicsCardBenchmarks(parameters.MinFps, parameters.MaxFps)
+                .Search(parameters.SearchTerm)
                 .Include(gb => gb.GraphicsCard)
                 .Include(gb => gb.Benchmark)
                 .OrderBy(gb => gb.Fps)
                 .ToListAsync();
 
             return PagedList<GraphicsCardBenchmark>
-                .ToPagedList(benchmarks, parameters.PageNumber, parameters.PageSize);
-                
+                .ToPagedList(benchmarks, parameters.PageNumber, parameters.PageSize);                
         }
         public async Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {
