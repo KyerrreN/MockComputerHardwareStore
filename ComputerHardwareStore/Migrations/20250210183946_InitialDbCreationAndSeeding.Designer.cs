@@ -12,7 +12,7 @@ using Repository;
 namespace ComputerHardwareStore.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20250210140115_InitialDbCreationAndSeeding")]
+    [Migration("20250210183946_InitialDbCreationAndSeeding")]
     partial class InitialDbCreationAndSeeding
     {
         /// <inheritdoc />
@@ -210,6 +210,10 @@ namespace ComputerHardwareStore.Migrations
                         .HasPrecision(4, 1)
                         .HasColumnType("decimal(4,1)");
 
+                    b.Property<string>("TestingTool")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("GraphicsCardId", "BenchmarkId");
 
                     b.HasIndex("BenchmarkId");
@@ -221,43 +225,50 @@ namespace ComputerHardwareStore.Migrations
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 1,
-                            Fps = 96.7m
+                            Fps = 96.7m,
+                            TestingTool = "Fraps"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 2,
-                            Fps = 112.3m
+                            Fps = 112.3m,
+                            TestingTool = "MSI Afterburner"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 3,
-                            Fps = 164.2m
+                            Fps = 164.2m,
+                            TestingTool = "RivaTuner Statistics Server"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 4,
-                            Fps = 24.3m
+                            Fps = 24.3m,
+                            TestingTool = "Shadowplay"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 5,
-                            Fps = 48.5m
+                            Fps = 48.5m,
+                            TestingTool = "MSI Afterburner"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 6,
-                            Fps = 76.1m
+                            Fps = 76.1m,
+                            TestingTool = "RivaTuner Statistics Server"
                         },
                         new
                         {
                             GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 7,
-                            Fps = 63.4m
+                            Fps = 63.4m,
+                            TestingTool = "RivaTuner Statistics Server"
                         });
                 });
 

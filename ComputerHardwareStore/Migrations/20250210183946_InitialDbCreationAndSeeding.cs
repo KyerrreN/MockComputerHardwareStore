@@ -55,7 +55,8 @@ namespace ComputerHardwareStore.Migrations
                 {
                     GraphicsCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BenchmarkId = table.Column<int>(type: "int", nullable: false),
-                    Fps = table.Column<decimal>(type: "decimal(4,1)", precision: 4, scale: 1, nullable: false)
+                    Fps = table.Column<decimal>(type: "decimal(4,1)", precision: 4, scale: 1, nullable: false),
+                    TestingTool = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,16 +101,16 @@ namespace ComputerHardwareStore.Migrations
 
             migrationBuilder.InsertData(
                 table: "GraphicsCardBenchmarks",
-                columns: new[] { "BenchmarkId", "GraphicsCardId", "Fps" },
+                columns: new[] { "BenchmarkId", "GraphicsCardId", "Fps", "TestingTool" },
                 values: new object[,]
                 {
-                    { 1, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 96.7m },
-                    { 2, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 112.3m },
-                    { 3, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m },
-                    { 4, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 24.3m },
-                    { 5, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 48.5m },
-                    { 6, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 76.1m },
-                    { 7, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 63.4m }
+                    { 1, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 96.7m, "Fraps" },
+                    { 2, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 112.3m, "MSI Afterburner" },
+                    { 3, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m, "RivaTuner Statistics Server" },
+                    { 4, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 24.3m, "Shadowplay" },
+                    { 5, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 48.5m, "MSI Afterburner" },
+                    { 6, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 76.1m, "RivaTuner Statistics Server" },
+                    { 7, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 63.4m, "RivaTuner Statistics Server" }
                 });
 
             migrationBuilder.CreateIndex(

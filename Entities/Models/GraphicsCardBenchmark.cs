@@ -18,6 +18,8 @@ namespace Entities.Models
         [Precision(4,1)]
         public decimal Fps { get; set; }
 
+        public string TestingTool { get; set; } = null!;
+
         // Relationships
         public GraphicsCard GraphicsCard { get; set; } = null!;
         public Benchmark Benchmark { get; set; } = null!;

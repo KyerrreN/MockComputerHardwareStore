@@ -19,43 +19,50 @@ namespace Repository.Configuration
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 1,
-                    Fps = 96.7M
+                    Fps = 96.7M,
+                    TestingTool = "Fraps"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 2,
-                    Fps = 112.3M
+                    Fps = 112.3M,
+                    TestingTool = "MSI Afterburner"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 3,
-                    Fps = 164.2M
+                    Fps = 164.2M,
+                    TestingTool = "RivaTuner Statistics Server"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 4,
-                    Fps = 24.3M
+                    Fps = 24.3M,
+                    TestingTool = "Shadowplay"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 5,
-                    Fps = 48.5M
+                    Fps = 48.5M,
+                    TestingTool = "MSI Afterburner"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 6,
-                    Fps = 76.1m
+                    Fps = 76.1m,
+                    TestingTool = "RivaTuner Statistics Server"
                 },
                 new GraphicsCardBenchmark
                 {
                     GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 7,
-                    Fps = 63.4m
+                    Fps = 63.4m,
+                    TestingTool = "RivaTuner Statistics Server"
                 }
             );
 
