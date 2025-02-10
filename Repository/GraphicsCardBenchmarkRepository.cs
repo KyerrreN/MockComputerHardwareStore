@@ -14,7 +14,10 @@ namespace Repository
         }
         public async Task<PagedList<GraphicsCardBenchmark>> GetBenchmarksAsync(Guid graphicsCardId, GraphicsCardBenchmarkParameters parameters, bool trackChanges)
         {
-            var benchmarks = await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId), trackChanges)
+            var benchmarks = await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId)
+                                                   && gb.Fps >= parameters.MinFps
+                                                   && gb.Fps <= parameters.MaxFps
+                                                   , trackChanges)
                 .Include(gb => gb.GraphicsCard)
                 .Include(gb => gb.Benchmark)
                 .OrderBy(gb => gb.Fps)

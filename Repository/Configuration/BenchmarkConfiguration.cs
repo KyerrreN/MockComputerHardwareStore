@@ -56,6 +56,13 @@ namespace Repository.Configuration
                     GameName = "Horizon: Zero Dawn",
                     Resolution = Entities.Enum.BenchmarkResolution.QuadHD,
                     Settings = Entities.Enum.BenchmarkSettings.High
+                },
+                new Benchmark
+                {
+                    Id = 7,
+                    GameName = "Marvel Rivals",
+                    Resolution = Entities.Enum.BenchmarkResolution.FullHD,
+                    Settings = Entities.Enum.BenchmarkSettings.High
                 }
             );
         }

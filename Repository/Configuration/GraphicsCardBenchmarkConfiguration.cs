@@ -35,26 +35,26 @@ namespace Repository.Configuration
                 },
                 new GraphicsCardBenchmark
                 {
-                    GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                    GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 4,
                     Fps = 24.3M
                 },
                 new GraphicsCardBenchmark
                 {
-                    GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                    GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 5,
                     Fps = 48.5M
                 },
                 new GraphicsCardBenchmark
                 {
-                    GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                    GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                     BenchmarkId = 6,
                     Fps = 76.1m
                 },
                 new GraphicsCardBenchmark
                 {
-                    GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
-                    BenchmarkId = 3,
+                    GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
+                    BenchmarkId = 7,
                     Fps = 63.4m
                 }
             );

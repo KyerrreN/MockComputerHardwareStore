@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.Exceptions;
 
 namespace Shared.RequestFeatures
 {
     public class GraphicsCardBenchmarkParameters : RequestParameters
     {
+        public decimal MinFps { get; set; }
+        public decimal MaxFps { get; set; }
+
+        public bool ValidFpsRange => MaxFps > MinFps;
     }
 }

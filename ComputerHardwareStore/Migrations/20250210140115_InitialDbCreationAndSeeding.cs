@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ComputerHardwareStore.Migrations
 {
     /// <inheritdoc />
-    public partial class DbCreationAndSeeding : Migration
+    public partial class InitialDbCreationAndSeeding : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,7 +84,8 @@ namespace ComputerHardwareStore.Migrations
                     { 3, "Cyberpunk 2077", 2, 0 },
                     { 4, "Horizon: Zero Dawn", 0, 0 },
                     { 5, "Horizon: Zero Dawn", 1, 0 },
-                    { 6, "Horizon: Zero Dawn", 1, 0 }
+                    { 6, "Horizon: Zero Dawn", 1, 0 },
+                    { 7, "Marvel Rivals", 2, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -102,13 +103,13 @@ namespace ComputerHardwareStore.Migrations
                 columns: new[] { "BenchmarkId", "GraphicsCardId", "Fps" },
                 values: new object[,]
                 {
-                    { 3, new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"), 63.4m },
-                    { 4, new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"), 24.3m },
-                    { 5, new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"), 48.5m },
-                    { 6, new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"), 76.1m },
                     { 1, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 96.7m },
                     { 2, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 112.3m },
-                    { 3, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m }
+                    { 3, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m },
+                    { 4, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 24.3m },
+                    { 5, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 48.5m },
+                    { 6, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 76.1m },
+                    { 7, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 63.4m }
                 });
 
             migrationBuilder.CreateIndex(

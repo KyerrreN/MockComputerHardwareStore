@@ -27,6 +27,8 @@ namespace Service
                                                                                     GraphicsCardBenchmarkParameters parameters,
                                                                                     bool trackChanges)
         {
+            ValidateFilterParameters(parameters);
+
             await CheckIfGraphicsCardExists(grapicsCardId, trackChanges);
 
             var benchmarksWithMetaData = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
@@ -148,6 +150,17 @@ namespace Service
                 throw new GraphicsCardBenchmarkNotFoundException(graphicsCardId);
 
             return graphicsCardBenchmark;
+        }
+        private void ValidateFilterParameters(GraphicsCardBenchmarkParameters parameters)
+        {
+            if (parameters.MinFps < 0m)
+                throw new MinFpsNegativeBadRequestException();
+
+            if (parameters.MaxFps > 999.9m)
+                throw new MaxFpsOverflowBadRequestException();
+
+            if (!parameters.ValidFpsRange)
+                throw new MaxFpsRangeBadRequestException();
         }
     }
 }

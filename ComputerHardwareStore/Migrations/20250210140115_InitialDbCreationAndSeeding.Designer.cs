@@ -12,8 +12,8 @@ using Repository;
 namespace ComputerHardwareStore.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20241006210559_DbCreationAndSeeding")]
-    partial class DbCreationAndSeeding
+    [Migration("20250210140115_InitialDbCreationAndSeeding")]
+    partial class InitialDbCreationAndSeeding
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,13 @@ namespace ComputerHardwareStore.Migrations
                             Id = 6,
                             GameName = "Horizon: Zero Dawn",
                             Resolution = 1,
+                            Settings = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            GameName = "Marvel Rivals",
+                            Resolution = 2,
                             Settings = 0
                         });
                 });
@@ -230,26 +237,26 @@ namespace ComputerHardwareStore.Migrations
                         },
                         new
                         {
-                            GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                            GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 4,
                             Fps = 24.3m
                         },
                         new
                         {
-                            GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                            GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 5,
                             Fps = 48.5m
                         },
                         new
                         {
-                            GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
+                            GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
                             BenchmarkId = 6,
                             Fps = 76.1m
                         },
                         new
                         {
-                            GraphicsCardId = new Guid("5280896c-12eb-49fc-a011-1bee7b7032f0"),
-                            BenchmarkId = 3,
+                            GraphicsCardId = new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"),
+                            BenchmarkId = 7,
                             Fps = 63.4m
                         });
                 });

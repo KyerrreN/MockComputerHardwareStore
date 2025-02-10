@@ -17,7 +17,7 @@ namespace Shared.RequestFeatures
                 TotalCount = count,
                 PageSize = pageSize,
                 CurrentPage = pageNumber,
-                TotalPages = (int)Math.Ceiling(count / (double)pageSize)
+                TotalPages = pageSize != 0 ? (int)Math.Ceiling(count / (double)pageSize) : 0
             };
 
             AddRange(items);
