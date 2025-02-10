@@ -10,5 +10,6 @@ namespace Shared.DataTransferObjects
     {
         public int BenchmarkId { get; set; }
         public decimal Fps { get; set; }
+        public string TestingTool { get; set; } 
     }
 }

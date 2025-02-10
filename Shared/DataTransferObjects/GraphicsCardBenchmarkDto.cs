@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared.DataTransferObjects
+﻿namespace Shared.DataTransferObjects
 {
     public record GraphicsCardBenchmarkDto
     {
@@ -14,5 +8,6 @@ namespace Shared.DataTransferObjects
         public string Resolution { get; init; }
         public string Settings { get; init; }
         public decimal Fps { get; init; }
+        public string TestingTool { get; set; }
     };
 }

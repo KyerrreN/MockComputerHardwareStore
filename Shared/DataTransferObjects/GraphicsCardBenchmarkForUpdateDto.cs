@@ -9,5 +9,6 @@ namespace Shared.DataTransferObjects
     public record GraphicsCardBenchmarkForUpdateDto
     {
         public decimal Fps { get; set; }
+        public string TestingTool { get; set; }
     }
 }
