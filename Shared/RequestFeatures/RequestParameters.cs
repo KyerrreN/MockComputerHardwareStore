@@ -24,5 +24,7 @@
                 }
             }
         }
+
+        public string? OrderBy { get; set; }
     }
 }

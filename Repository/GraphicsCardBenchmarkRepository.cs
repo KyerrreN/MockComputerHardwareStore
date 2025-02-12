@@ -23,7 +23,7 @@ namespace Repository
                 .Search(parameters.SearchTerm)
                 .Include(gb => gb.GraphicsCard)
                 .Include(gb => gb.Benchmark)
-                .OrderBy(gb => gb.Fps)
+                .Sort(parameters.OrderBy)
                 .ToListAsync();
 
             return PagedList<GraphicsCardBenchmark>
