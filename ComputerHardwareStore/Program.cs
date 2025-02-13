@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using NLog;
+using Service;
+using Shared.DataTransferObjects;
 
 namespace ComputerHardwareStore
 {
@@ -32,6 +34,9 @@ namespace ComputerHardwareStore
 
             // Action Filter
             builder.Services.AddScoped<BindingValidationFilterAttribute>();
+
+            // Data Shaper
+            builder.Services.AddScoped<IDataShaper<GraphicsCardBenchmarkDto>, DataShaper<GraphicsCardBenchmarkDto>>();
 
             // Configure to accept headers from 
             // HTTP request and adding XML formatter

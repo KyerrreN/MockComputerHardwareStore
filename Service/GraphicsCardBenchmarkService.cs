@@ -5,6 +5,7 @@ using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Dynamic;
 
 namespace Service
 {
@@ -13,17 +14,20 @@ namespace Service
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<GraphicsCardBenchmarkDto> _dataShaper;
 
         public GraphicsCardBenchmarkService(IRepositoryManager repository,
                                             ILoggerManager logger,
-                                            IMapper mapper)
+                                            IMapper mapper,
+                                            IDataShaper<GraphicsCardBenchmarkDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
-        public async Task<(IEnumerable<GraphicsCardBenchmarkDto> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
+        public async Task<(IEnumerable<ExpandoObject> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
                                                                                     GraphicsCardBenchmarkParameters parameters,
                                                                                     bool trackChanges)
         {
@@ -34,8 +38,9 @@ namespace Service
             var benchmarksWithMetaData = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
 
             var benchmarksDto = _mapper.Map<IEnumerable<GraphicsCardBenchmarkDto>>(benchmarksWithMetaData);
+            var shapedData = _dataShaper.ShapeData(benchmarksDto, parameters.Fields);
 
-            return (benchmarks: benchmarksDto, metaData: benchmarksWithMetaData.MetaData);
+            return (benchmarks: shapedData, metaData: benchmarksWithMetaData.MetaData);
         }
         public async Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
         {

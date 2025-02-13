@@ -1,12 +1,13 @@
 ﻿using Entities.Models;
 using Shared.DataTransferObjects;
 using Shared.RequestFeatures;
+using System.Dynamic;
 
 namespace Service.Contracts
 {
     public interface IGraphicsCardBenchmarkService
     {
-        Task<(IEnumerable<GraphicsCardBenchmarkDto> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId, 
+        Task<(IEnumerable<ExpandoObject> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId, 
                                                                        GraphicsCardBenchmarkParameters parameters, 
                                                                        bool trackChanges);
         Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges);

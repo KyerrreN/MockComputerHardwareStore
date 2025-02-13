@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,11 @@ namespace Service
         // ctor
         public ServiceManager(IRepositoryManager repositoryManager,
                               ILoggerManager loggerManager,
-                              IMapper mapper)
+                              IMapper mapper,
+                              IDataShaper<GraphicsCardBenchmarkDto> dataShaper)
         {
             _graphicsCardBenchmarkService = new Lazy<IGraphicsCardBenchmarkService>(() =>
-                                                    new GraphicsCardBenchmarkService(repositoryManager, loggerManager, mapper));
+                                                    new GraphicsCardBenchmarkService(repositoryManager, loggerManager, mapper, dataShaper));
             _graphicsCardService = new Lazy<IGraphicsCardService>(() => new GraphicsCardService(repositoryManager, loggerManager, mapper));
             _benchmarkService = new Lazy<IBenchmarkService>(() => new BenchmarkService(mapper, repositoryManager, loggerManager));
         }
