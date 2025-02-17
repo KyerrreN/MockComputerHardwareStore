@@ -27,7 +27,7 @@ namespace Service
             _dataShaper = dataShaper;
         }
 
-        public async Task<(IEnumerable<ExpandoObject> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
+        public async Task<(IEnumerable<Entity> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
                                                                                     GraphicsCardBenchmarkParameters parameters,
                                                                                     bool trackChanges)
         {

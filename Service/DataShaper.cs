@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Models;
 using System.Dynamic;
 using System.Reflection;
 
@@ -12,14 +13,14 @@ namespace Service
             Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entities, string fieldsString)
+        public IEnumerable<Entity> ShapeData(IEnumerable<T> entities, string fieldsString)
         {
             var requiredProperties = GetRequiredProperties(fieldsString);
 
             return FetchData(entities, requiredProperties);
         }
 
-        public ExpandoObject ShapeData(T entity, string fieldsString)
+        public Entity ShapeData(T entity, string fieldsString)
         {
             var requiredProperties = GetRequiredProperties(fieldsString);
 
@@ -53,21 +54,20 @@ namespace Service
 
             return requiredProperties;
         }
-        private ExpandoObject FetchDataForEntity(T entity, IEnumerable<PropertyInfo> requiredProperties)
+        private Entity FetchDataForEntity(T Entity, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedObject = new ExpandoObject();
-
+            var shapedObject = new Entity();
             foreach (var property in requiredProperties)
             {
-                var objectPropertyValue = property.GetValue(entity);
+                var objectPropertyValue = property.GetValue(Entity);
                 shapedObject.TryAdd(property.Name, objectPropertyValue);
             }
-
             return shapedObject;
         }
-        private IEnumerable<ExpandoObject> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
+
+        private IEnumerable<Entity> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedData = new List<ExpandoObject>();
+            var shapedData = new List<Entity>();
 
             foreach (var entity in entities)
             {
