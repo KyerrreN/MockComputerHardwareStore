@@ -8,7 +8,7 @@ namespace Entities.Exceptions
 {
     public class BenchmarkNotFoundException : NotFoundException
     {
-        public BenchmarkNotFoundException(int benchmarkId)
+        public BenchmarkNotFoundException(Guid benchmarkId)
             : base ($"Benchmark with id : {benchmarkId} doesn't exist in the database")
         {
             

@@ -29,7 +29,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetBenchmarkById")]
-        public async Task<IActionResult> GetBenchmarkById(int id)
+        public async Task<IActionResult> GetBenchmarkById(Guid id)
         {
             var benchmark = await _service.BenchmarkService.GetBenchmarkAsync(id, trackChanges: false);
 

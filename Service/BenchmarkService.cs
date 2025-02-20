@@ -43,7 +43,7 @@ namespace Service
             return benchmarksDto;
         }
 
-        public async Task<BenchmarkDto> GetBenchmarkAsync(int id, bool trackChanges)
+        public async Task<BenchmarkDto> GetBenchmarkAsync(Guid id, bool trackChanges)
         {
             var benchmark = await _repository.Benchmark.GetBenchmarkAsync(id, trackChanges);
 

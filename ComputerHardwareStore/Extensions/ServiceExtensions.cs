@@ -2,6 +2,8 @@
 using Contracts;
 using FluentValidation;
 using LoggerService;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
@@ -82,6 +84,31 @@ namespace ComputerHardwareStore.Extensions
         public static void ConfigureFluentValidation(this IServiceCollection services)
         {
             services.AddValidatorsFromAssemblyContaining(typeof(ComputerHardwareStore.Presentation.AssemblyReference));
+        }
+        public static void AddCustomMediaTypes(this IServiceCollection services)
+        {
+            services.Configure<MvcOptions>(config =>
+            {
+                var systemTextJsonOutputFormatter = config.OutputFormatters
+                    .OfType<SystemTextJsonOutputFormatter>()?
+                    .FirstOrDefault();
+
+                if (systemTextJsonOutputFormatter != null)
+                {
+                    systemTextJsonOutputFormatter.SupportedMediaTypes
+                        .Add("application/vnd.kyerrren.hateoas+json");
+                }
+
+                var xmlOutputFormatter = config.OutputFormatters
+                    .OfType<XmlDataContractSerializerOutputFormatter>()?
+                    .FirstOrDefault();
+
+                if (xmlOutputFormatter != null)
+                {
+                    xmlOutputFormatter.SupportedMediaTypes.
+                        Add("application/vnd.kyerrren.hateoas+xml");
+                }
+            });
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public record GraphicsCardBenchmarkDto
     {
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         public string GraphicsCardName { get; init; }
         public string GameName { get; init; }
         public string Resolution { get; init; }

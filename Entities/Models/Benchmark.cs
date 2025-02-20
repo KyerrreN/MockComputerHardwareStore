@@ -16,7 +16,7 @@ namespace Entities.Models
     public class Benchmark
     {
         [Key]
-        public int Id { get; set; } // PK
+        public Guid Id { get; set; } // PK
 
         [Required(ErrorMessage = "The name of the game is required")]
         [MaxLength(64)]

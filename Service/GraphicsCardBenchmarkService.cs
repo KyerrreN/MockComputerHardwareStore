@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
+using Entities.LinkModels;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -14,35 +15,37 @@ namespace Service
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        private readonly IDataShaper<GraphicsCardBenchmarkDto> _dataShaper;
+        //private readonly IDataShaper<GraphicsCardBenchmarkDto> _dataShaper;
+        private readonly IGraphicsCardBenchmarkLinks _graphicsCardBenchmarkLinks;
 
         public GraphicsCardBenchmarkService(IRepositoryManager repository,
                                             ILoggerManager logger,
                                             IMapper mapper,
-                                            IDataShaper<GraphicsCardBenchmarkDto> dataShaper)
+                                            IGraphicsCardBenchmarkLinks graphicsCardBenchmarkLinks)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-            _dataShaper = dataShaper;
+            //_dataShaper = dataShaper;
+            _graphicsCardBenchmarkLinks = graphicsCardBenchmarkLinks;
         }
 
-        public async Task<(IEnumerable<Entity> benchmarks, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
-                                                                                    GraphicsCardBenchmarkParameters parameters,
+        public async Task<(LinkResponse linkResponse, MetaData metaData)> GetBenchmarksAsync(Guid grapicsCardId,
+                                                                                    LinkParameters parameters,
                                                                                     bool trackChanges)
         {
-            ValidateFilterParameters(parameters);
+            ValidateFilterParameters(parameters.GraphicsCardBenchmarkParameters);
 
             await CheckIfGraphicsCardExists(grapicsCardId, trackChanges);
 
-            var benchmarksWithMetaData = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters, trackChanges);
+            var benchmarksWithMetaData = await _repository.GraphicsCardBenchmark.GetBenchmarksAsync(grapicsCardId, parameters.GraphicsCardBenchmarkParameters, trackChanges);
 
             var benchmarksDto = _mapper.Map<IEnumerable<GraphicsCardBenchmarkDto>>(benchmarksWithMetaData);
-            var shapedData = _dataShaper.ShapeData(benchmarksDto, parameters.Fields);
+            var links = _graphicsCardBenchmarkLinks.TryGenerateLinks(benchmarksDto, parameters.GraphicsCardBenchmarkParameters.Fields, grapicsCardId, parameters.Context);
 
-            return (benchmarks: shapedData, metaData: benchmarksWithMetaData.MetaData);
+            return (linkResponse: links, metaData: benchmarksWithMetaData.MetaData);
         }
-        public async Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        public async Task<GraphicsCardBenchmarkDto> GetBenchmarkAsync(Guid graphicsCardId, Guid benchmarkId, bool trackChanges)
         {
             await CheckIfGraphicsCardExists(graphicsCardId, trackChanges);
 
@@ -58,7 +61,7 @@ namespace Service
             return benchmarkDto;
         }
 
-        public async Task<GraphicsCardBenchmarkDto> CreateGraphicsCardBenchmarkAsync(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark, bool trackChanges)
+        public async Task<GraphicsCardBenchmarkDto> CreateGraphicsCardBenchmarkAsync(Guid graphicsCardId, Guid benchmarkId, GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark, bool trackChanges)
         {
             await CheckIfGraphicsCardExists(graphicsCardId, trackChanges);
 
@@ -88,7 +91,7 @@ namespace Service
             return graphicsCardBenchmarkToReturn;
         }
 
-        public async Task DeleteBenchmarkForGraphicsCardAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        public async Task DeleteBenchmarkForGraphicsCardAsync(Guid graphicsCardId, Guid benchmarkId, bool trackChanges)
         {
             await CheckIfGraphicsCardExists(graphicsCardId, trackChanges);
 
@@ -100,7 +103,7 @@ namespace Service
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateGraphicsCardBenchmarkAsync(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges)
+        public async Task UpdateGraphicsCardBenchmarkAsync(Guid graphicsCardId, Guid benchmarkId, GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark, bool gdTrackChanges, bool bnTrackChanges)
         {
             await CheckIfGraphicsCardExists(graphicsCardId, gdTrackChanges);
 
@@ -112,7 +115,7 @@ namespace Service
             await _repository.SaveAsync();
         }
 
-        public async Task<(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity)> GetGraphicsCardBenchmarkForPatchAsync(Guid graphicsCardId, int benchmarkId, bool gcTrackChanges, bool benchTrackChanges)
+        public async Task<(GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmarkToPatch, GraphicsCardBenchmark graphicsCardBenchmarkEntity)> GetGraphicsCardBenchmarkForPatchAsync(Guid graphicsCardId, Guid benchmarkId, bool gcTrackChanges, bool benchTrackChanges)
         {
             await CheckIfGraphicsCardExists(graphicsCardId, gcTrackChanges);
 
@@ -141,13 +144,13 @@ namespace Service
                 throw new GraphicsCardNotFoundException(graphicsCardId);
             }
         }
-        private async Task CheckIfBenchmarkExists(int benchmarkId, bool trackChanges)
+        private async Task CheckIfBenchmarkExists(Guid benchmarkId, bool trackChanges)
         {
             var benchmark = await _repository.Benchmark.GetBenchmarkAsync(benchmarkId, false);
             if (benchmark is null)
                 throw new BenchmarkNotFoundException(benchmarkId);
         }
-        private async Task<GraphicsCardBenchmark> GetGraphicsCardBenchmarkAndCheckIfExists(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        private async Task<GraphicsCardBenchmark> GetGraphicsCardBenchmarkAndCheckIfExists(Guid graphicsCardId, Guid benchmarkId, bool trackChanges)
         {
             var graphicsCardBenchmark = await _repository.GraphicsCardBenchmark.GetBenchmarkAsync(graphicsCardId, benchmarkId, trackChanges);
             

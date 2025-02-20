@@ -8,7 +8,7 @@ namespace Entities.Exceptions
 {
     public sealed class GraphicsCardBenchmarkFoundException : BadRequestException
     {
-        public GraphicsCardBenchmarkFoundException(Guid gcId, int benchmarkId)
+        public GraphicsCardBenchmarkFoundException(Guid gcId, Guid benchmarkId)
             : base ($"Benchmark with id: {benchmarkId} for graphics card with id: {gcId} already exists")
         {
             

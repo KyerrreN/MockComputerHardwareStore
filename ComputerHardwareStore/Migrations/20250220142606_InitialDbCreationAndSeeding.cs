@@ -17,8 +17,7 @@ namespace ComputerHardwareStore.Migrations
                 name: "Benchmarks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GameName = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: false),
                     Resolution = table.Column<int>(type: "int", nullable: false),
                     Settings = table.Column<int>(type: "int", nullable: false)
@@ -54,7 +53,7 @@ namespace ComputerHardwareStore.Migrations
                 columns: table => new
                 {
                     GraphicsCardId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BenchmarkId = table.Column<int>(type: "int", nullable: false),
+                    BenchmarkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Fps = table.Column<decimal>(type: "decimal(4,1)", precision: 4, scale: 1, nullable: false),
                     TestingTool = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -80,13 +79,13 @@ namespace ComputerHardwareStore.Migrations
                 columns: new[] { "Id", "GameName", "Resolution", "Settings" },
                 values: new object[,]
                 {
-                    { 1, "Cyberpunk 2077", 0, 0 },
-                    { 2, "Cyberpunk 2077", 1, 0 },
-                    { 3, "Cyberpunk 2077", 2, 0 },
-                    { 4, "Horizon: Zero Dawn", 0, 0 },
-                    { 5, "Horizon: Zero Dawn", 1, 0 },
-                    { 6, "Horizon: Zero Dawn", 1, 0 },
-                    { 7, "Marvel Rivals", 2, 0 }
+                    { new Guid("0be78fd9-f27c-4e59-a6d6-c26ee4fa93e4"), "Marvel Rivals", 2, 0 },
+                    { new Guid("1d519389-f0de-4eef-b3d1-1938df9700f4"), "Cyberpunk 2077", 0, 0 },
+                    { new Guid("27817726-bd13-4784-a3f3-0ab9b10d6190"), "Cyberpunk 2077", 2, 0 },
+                    { new Guid("4092a98e-efef-480d-9cb0-d72238b62a51"), "Horizon: Zero Dawn", 1, 0 },
+                    { new Guid("72cedae8-f648-4a4e-826b-47a85aec960e"), "Horizon: Zero Dawn", 0, 0 },
+                    { new Guid("88d38fd2-8b75-4bf2-ba67-d43a7329c7b5"), "Cyberpunk 2077", 1, 0 },
+                    { new Guid("ffdaf3aa-0c42-499c-b63b-1cca50a36b97"), "Horizon: Zero Dawn", 1, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -104,13 +103,13 @@ namespace ComputerHardwareStore.Migrations
                 columns: new[] { "BenchmarkId", "GraphicsCardId", "Fps", "TestingTool" },
                 values: new object[,]
                 {
-                    { 1, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 96.7m, "Fraps" },
-                    { 2, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 112.3m, "MSI Afterburner" },
-                    { 3, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m, "RivaTuner Statistics Server" },
-                    { 4, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 24.3m, "Shadowplay" },
-                    { 5, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 48.5m, "MSI Afterburner" },
-                    { 6, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 76.1m, "RivaTuner Statistics Server" },
-                    { 7, new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 63.4m, "RivaTuner Statistics Server" }
+                    { new Guid("0be78fd9-f27c-4e59-a6d6-c26ee4fa93e4"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 63.4m, "RivaTuner Statistics Server" },
+                    { new Guid("1d519389-f0de-4eef-b3d1-1938df9700f4"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 96.7m, "Fraps" },
+                    { new Guid("27817726-bd13-4784-a3f3-0ab9b10d6190"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 164.2m, "RivaTuner Statistics Server" },
+                    { new Guid("4092a98e-efef-480d-9cb0-d72238b62a51"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 76.1m, "RivaTuner Statistics Server" },
+                    { new Guid("72cedae8-f648-4a4e-826b-47a85aec960e"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 24.3m, "Shadowplay" },
+                    { new Guid("88d38fd2-8b75-4bf2-ba67-d43a7329c7b5"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 112.3m, "MSI Afterburner" },
+                    { new Guid("ffdaf3aa-0c42-499c-b63b-1cca50a36b97"), new Guid("b5d628f0-d4e2-4d63-920d-9aeaae84c418"), 48.5m, "MSI Afterburner" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,5 +1,6 @@
 using ComputerHardwareStore.Extensions;
 using ComputerHardwareStore.Presentation.ActionFilters;
+using ComputerHardwareStore.Utility;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,13 @@ namespace ComputerHardwareStore
 
             // Data Shaper
             builder.Services.AddScoped<IDataShaper<GraphicsCardBenchmarkDto>, DataShaper<GraphicsCardBenchmarkDto>>();
+
+            // Media Types
+            builder.Services.AddCustomMediaTypes();
+            builder.Services.AddScoped<ValidateMediaTypeAttribute>();
+
+            // Links for HATEOAS
+            builder.Services.AddScoped<IGraphicsCardBenchmarkLinks, GraphicsCardBenchmarkLinks>();
 
             // Configure to accept headers from 
             // HTTP request and adding XML formatter

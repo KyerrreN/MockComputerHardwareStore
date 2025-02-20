@@ -16,7 +16,7 @@ namespace Repository
                 .OrderBy(b => b.Id)
                 .ToListAsync();
         }
-        public async Task<Benchmark> GetBenchmarkAsync(int benchmarkId, bool trackChanges)
+        public async Task<Benchmark> GetBenchmarkAsync(Guid benchmarkId, bool trackChanges)
         {
             return await FindByCondition(g => g.Id.Equals(benchmarkId), trackChanges)
                 .SingleOrDefaultAsync();

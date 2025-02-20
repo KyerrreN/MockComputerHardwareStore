@@ -8,7 +8,7 @@ namespace Shared.DataTransferObjects
 {
     public record GraphicsCardBenchmarkForCreationDto
     {
-        public int BenchmarkId { get; set; }
+        public Guid BenchmarkId { get; set; }
         public decimal Fps { get; set; }
         public string TestingTool { get; set; } 
     }

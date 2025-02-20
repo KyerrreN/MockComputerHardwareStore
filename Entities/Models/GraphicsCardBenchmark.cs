@@ -12,7 +12,7 @@ namespace Entities.Models
     {
         // Columns
         public Guid GraphicsCardId { get; set; }
-        public int BenchmarkId { get; set; }
+        public Guid BenchmarkId { get; set; }
 
         [Required(ErrorMessage = "FPS of the benchmark is required")]
         [Precision(4,1)]

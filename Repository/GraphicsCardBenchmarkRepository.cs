@@ -29,7 +29,7 @@ namespace Repository
             return PagedList<GraphicsCardBenchmark>
                 .ToPagedList(benchmarks, parameters.PageNumber, parameters.PageSize);                
         }
-        public async Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, int benchmarkId, bool trackChanges)
+        public async Task<GraphicsCardBenchmark> GetBenchmarkAsync(Guid graphicsCardId, Guid benchmarkId, bool trackChanges)
         {
             return await FindByCondition(gb => gb.GraphicsCardId.Equals(graphicsCardId) && gb.BenchmarkId.Equals(benchmarkId), trackChanges)
                 .Include(gb => gb.Benchmark)
@@ -37,7 +37,7 @@ namespace Repository
                 .SingleOrDefaultAsync();
         }
 
-        public void CreateGraphicsCardBenchmark(Guid graphicsCardId, int benchmarkId, GraphicsCardBenchmark benchmark)
+        public void CreateGraphicsCardBenchmark(Guid graphicsCardId, Guid benchmarkId, GraphicsCardBenchmark benchmark)
         {
             benchmark.GraphicsCardId = graphicsCardId;
             benchmark.BenchmarkId = benchmarkId;
