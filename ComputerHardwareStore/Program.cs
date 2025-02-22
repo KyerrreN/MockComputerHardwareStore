@@ -40,7 +40,6 @@ namespace ComputerHardwareStore
             builder.Services.AddScoped<IDataShaper<GraphicsCardBenchmarkDto>, DataShaper<GraphicsCardBenchmarkDto>>();
 
             // Media Types
-            builder.Services.AddCustomMediaTypes();
             builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 
             // Links for HATEOAS
@@ -56,6 +55,8 @@ namespace ComputerHardwareStore
             }).AddXmlDataContractSerializerFormatters()
               .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
+
+            builder.Services.AddCustomMediaTypes();
 
             // Suprresing filters of ApiController attribute
             builder.Services.Configure<ApiBehaviorOptions>(options =>

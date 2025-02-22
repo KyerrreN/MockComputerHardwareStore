@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.Enum;
 using Entities.Models;
 using Shared.DataTransferObjects;
 
@@ -41,7 +42,11 @@ namespace ComputerHardwareStore.MappingProfile
                 .ForMember(b => b.Settings,
                 opt => opt.MapFrom(x => x.Settings.ToString()));
 
-            CreateMap<BenchmarkForCreationDto, Benchmark>();
+            CreateMap<BenchmarkForCreationDto, Benchmark>()
+                .ForMember(x => x.Settings,
+                opt => opt.MapFrom(x => (BenchmarkSettings)x.Settings))
+                .ForMember(x => x.Resolution,
+                opt => opt.MapFrom(x => (BenchmarkResolution)x.Resolution));
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Service
         public ServiceManager(IRepositoryManager repositoryManager,
                               ILoggerManager loggerManager,
                               IMapper mapper,
-                              IDataShaper<GraphicsCardBenchmarkDto> dataShaper)
+                              IGraphicsCardBenchmarkLinks graphicsCardBenchmarkLinks)
         {
             _graphicsCardBenchmarkService = new Lazy<IGraphicsCardBenchmarkService>(() =>
-                                                    new GraphicsCardBenchmarkService(repositoryManager, loggerManager, mapper, dataShaper));
+                                                    new GraphicsCardBenchmarkService(repositoryManager, loggerManager, mapper, graphicsCardBenchmarkLinks));
             _graphicsCardService = new Lazy<IGraphicsCardService>(() => new GraphicsCardService(repositoryManager, loggerManager, mapper));
             _benchmarkService = new Lazy<IBenchmarkService>(() => new BenchmarkService(mapper, repositoryManager, loggerManager));
         }

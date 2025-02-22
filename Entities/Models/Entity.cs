@@ -1,4 +1,4 @@
-﻿using Entities.LinkFolder;
+﻿using Entities.LinkModels;
 using System.Collections;
 using System.Dynamic;
 using System.Xml;

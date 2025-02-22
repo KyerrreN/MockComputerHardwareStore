@@ -12,7 +12,7 @@ using Repository;
 namespace ComputerHardwareStore.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20250220142606_InitialDbCreationAndSeeding")]
+    [Migration("20250222090702_InitialDbCreationAndSeeding")]
     partial class InitialDbCreationAndSeeding
     {
         /// <inheritdoc />

@@ -33,14 +33,15 @@ namespace ComputerHardwareStore.Presentation.Controllers
         {
             var linkParams = new LinkParameters(parameters, HttpContext);
 
-            var pagedResult = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, linkParams, trackChanges: false);
+            var result = await _service.GraphicsCardBenchmarkService.GetBenchmarksAsync(graphicsCardId, linkParams, trackChanges: false);
 
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(result.metaData));
 
-            return Ok(pagedResult.benchmarks);
+            return result.linkResponse.HasLinks ? Ok(result.linkResponse.LinkedEntities)
+                                                : Ok(result.linkResponse.ShapedEntities);
         }
 
-        [HttpGet("{id:int}", Name = "GetGraphicsCardBenchmark")]
+        [HttpGet("{id:guid}", Name = "GetGraphicsCardBenchmark")]
         public async Task<IActionResult> GetGraphicsCardBenchmark(Guid graphicsCardId, Guid id)
         {
             var benchmark = await _service.GraphicsCardBenchmarkService.GetBenchmarkAsync(graphicsCardId, id, trackChanges: false);
@@ -48,7 +49,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(benchmark);
         }
 
-        [HttpPost("{id:int}")]
+        [HttpPost("{id:guid}")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
         {
@@ -68,7 +69,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
                 graphicsCardBenchmarkToReturn);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteGraphicsCardBenchmark(Guid graphicsCardId, Guid id)
         {
             await _service.GraphicsCardBenchmarkService.DeleteBenchmarkForGraphicsCardAsync(graphicsCardId, id, false);
@@ -76,7 +77,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:guid}")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> UpdateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
         {
@@ -94,7 +95,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id:int}")]
+        [HttpPatch("{id:guid}")]
         public async Task<IActionResult> PartiallyUpdateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] JsonPatchDocument<GraphicsCardBenchmarkForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

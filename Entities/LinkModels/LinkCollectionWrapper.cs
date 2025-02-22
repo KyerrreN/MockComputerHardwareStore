@@ -1,4 +1,4 @@
-﻿namespace Entities.LinkFolder
+﻿namespace Entities.LinkModels
 {
     public class LinkCollectionWrapper<T> : LinkResourceBase
     {

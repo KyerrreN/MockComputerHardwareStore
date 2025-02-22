@@ -3,7 +3,6 @@ using Entities.LinkModels;
 using Entities.Models;
 using Shared.DataTransferObjects;
 using Microsoft.Net.Http.Headers;
-using Entities.LinkFolder;
 
 namespace ComputerHardwareStore.Utility
 {
@@ -94,7 +93,7 @@ namespace ComputerHardwareStore.Utility
 
         private LinkCollectionWrapper<Entity> CreateLinksForGraphicsCardBenchmarks(HttpContext httpContext, LinkCollectionWrapper<Entity> graphicsCardBenchmarkWrapper)
         {
-            graphicsCardBenchmarkWrapper.Links.Add(new Link(_linkGenerator.GetUriByAction(httpContext, "GetGraphicsCardBenchmarks", values: new { }),
+            graphicsCardBenchmarkWrapper.Links.Add(new Link(_linkGenerator.GetUriByAction(httpContext, "GetGraphicsCardBenchmarks", values: new { pageNumber = 1, pageSize = 10 }),
                                          "self",
                                          "GET"));
 

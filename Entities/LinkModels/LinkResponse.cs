@@ -1,5 +1,4 @@
-﻿using Entities.LinkFolder;
-using Entities.Models;
+﻿using Entities.Models;
 
 namespace Entities.LinkModels
 {

@@ -1,6 +1,4 @@
-﻿using Entities.Enum;
-
-namespace Shared.DataTransferObjects
+﻿namespace Shared.DataTransferObjects
 {
-    public record BenchmarkForCreationDto(string GameName, BenchmarkSettings Settings, BenchmarkResolution Resolution);
+    public record BenchmarkForCreationDto(string GameName, byte Settings, byte Resolution);
 }

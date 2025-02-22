@@ -28,7 +28,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(benchmarks);
         }
 
-        [HttpGet("{id:int}", Name = "GetBenchmarkById")]
+        [HttpGet("{id:guid}", Name = "GetBenchmarkById")]
         public async Task<IActionResult> GetBenchmarkById(Guid id)
         {
             var benchmark = await _service.BenchmarkService.GetBenchmarkAsync(id, trackChanges: false);
