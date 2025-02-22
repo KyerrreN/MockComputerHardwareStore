@@ -97,6 +97,8 @@ namespace ComputerHardwareStore.Extensions
                 {
                     systemTextJsonOutputFormatter.SupportedMediaTypes
                         .Add("application/vnd.kyerrren.hateoas+json");
+                    systemTextJsonOutputFormatter.SupportedMediaTypes
+                        .Add("application/vnd.kyerrren.apiroot+json");
                 }
 
                 var xmlOutputFormatter = config.OutputFormatters
@@ -105,8 +107,10 @@ namespace ComputerHardwareStore.Extensions
 
                 if (xmlOutputFormatter != null)
                 {
-                    xmlOutputFormatter.SupportedMediaTypes.
-                        Add("application/vnd.kyerrren.hateoas+xml");
+                    xmlOutputFormatter.SupportedMediaTypes
+                        .Add("application/vnd.kyerrren.hateoas+xml");
+                    xmlOutputFormatter.SupportedMediaTypes
+                        .Add("application/vnd.kyerrren.apiroot+xml");
                 }
             });
         }

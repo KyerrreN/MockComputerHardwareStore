@@ -29,7 +29,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         // Action Methods
-        [HttpGet]
+        [HttpGet(Name = "GetGraphicsCards")]
         public async Task<IActionResult> GetGraphicsCards()
         {
             var graphicsCards = await _service.GraphicsCardService.GetAllGraphicsCardsAsync(trackChanges: false);
@@ -53,7 +53,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(graphicsCardCollection);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateGraphicsCard")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
         {
@@ -99,6 +99,13 @@ namespace ComputerHardwareStore.Presentation.Controllers
             await _service.GraphicsCardService.UpdateGraphicsCardAsync(id, graphicsCardForUpdate, trackChanges: true);
 
             return NoContent();
+        }
+        [HttpOptions]
+        public IActionResult GetGraphicsCardOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+
+            return Ok();
         }
     }
 }

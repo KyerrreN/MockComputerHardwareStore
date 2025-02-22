@@ -20,7 +20,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             _postValidator = postValidator;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllBenchmarks")]
         public async Task<IActionResult> GetAllBenchmarks()
         {
             var benchmarks = await _service.BenchmarkService.GetAllBenchmarksAsync(trackChanges: false);
@@ -36,7 +36,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return Ok(benchmark);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateBenchmark")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
         public async Task<IActionResult> CreateBenchmark([FromBody] BenchmarkForCreationDto bechmark)
         {

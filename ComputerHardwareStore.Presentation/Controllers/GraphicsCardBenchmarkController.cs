@@ -27,6 +27,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet]
+        [HttpHead]
         [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
         public async Task<IActionResult> GetGraphicsCardBenchmarks(Guid graphicsCardId,
                                                                    [FromQuery] GraphicsCardBenchmarkParameters parameters)
