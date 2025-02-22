@@ -58,6 +58,8 @@ namespace ComputerHardwareStore
 
             builder.Services.AddCustomMediaTypes();
 
+            builder.Services.ConfigureVersioning();
+
             // Suprresing filters of ApiController attribute
             builder.Services.Configure<ApiBehaviorOptions>(options =>
             {

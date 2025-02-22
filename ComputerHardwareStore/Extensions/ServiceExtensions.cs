@@ -1,9 +1,11 @@
 ﻿using ComputerHardwareStore.Presentation;
+using ComputerHardwareStore.Presentation.Controllers;
 using Contracts;
 using FluentValidation;
 using LoggerService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
@@ -112,6 +114,22 @@ namespace ComputerHardwareStore.Extensions
                     xmlOutputFormatter.SupportedMediaTypes
                         .Add("application/vnd.kyerrren.apiroot+xml");
                 }
+            });
+        }
+
+        // Versioning
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                opt.Conventions.Controller<GraphicsCardsController>()
+                        .HasApiVersion(new ApiVersion(1, 0));
+                opt.Conventions.Controller<GraphicsCardV2Controller>()
+                        .HasDeprecatedApiVersion(new ApiVersion(2, 0));
             });
         }
     }
