@@ -29,7 +29,6 @@ namespace ComputerHardwareStore
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.ConfigureRepositoryManager();
             builder.Services.ConfigureServiceManager();
 
@@ -52,6 +51,7 @@ namespace ComputerHardwareStore
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
                 config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+                config.CacheProfiles.Add("120secondsDuration", new CacheProfile { Duration = 120  });
             }).AddXmlDataContractSerializerFormatters()
               .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
@@ -59,6 +59,10 @@ namespace ComputerHardwareStore
             builder.Services.AddCustomMediaTypes();
 
             builder.Services.ConfigureVersioning();
+
+            // Cache
+            builder.Services.ConfigureResponseCaching();
+            builder.Services.ConfigureHttpCacheHeaders();
 
             // Suprresing filters of ApiController attribute
             builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -111,6 +115,9 @@ namespace ComputerHardwareStore
                 ForwardedHeaders = ForwardedHeaders.All
             });
             app.UseCors("CorsPolicy");
+
+            app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
 
             app.UseAuthorization();
 

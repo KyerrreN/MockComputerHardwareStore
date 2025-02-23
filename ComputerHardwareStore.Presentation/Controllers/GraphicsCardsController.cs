@@ -1,6 +1,7 @@
 ﻿using ComputerHardwareStore.Presentation.ActionFilters;
 using ComputerHardwareStore.Presentation.ModelBinders;
 using FluentValidation;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -38,6 +39,8 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}", Name = "GraphicsCardById")]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<IActionResult> GetGraphicsCard(Guid id)
         {
             var graphicsCard = await _service.GraphicsCardService.GetGraphicsCardAsync(id, trackChanges: false);
