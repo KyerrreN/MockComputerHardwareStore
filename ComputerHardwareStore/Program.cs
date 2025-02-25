@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using ComputerHardwareStore.Extensions;
 using ComputerHardwareStore.Presentation.ActionFilters;
 using ComputerHardwareStore.Utility;
@@ -44,6 +45,15 @@ namespace ComputerHardwareStore
             // Links for HATEOAS
             builder.Services.AddScoped<IGraphicsCardBenchmarkLinks, GraphicsCardBenchmarkLinks>();
 
+            // Cache
+            builder.Services.ConfigureResponseCaching();
+            builder.Services.ConfigureHttpCacheHeaders();
+
+            // Rate Limiting
+            builder.Services.AddMemoryCache();
+            builder.Services.ConfigureRateLimitingOptions();
+            builder.Services.AddHttpContextAccessor();
+
             // Configure to accept headers from 
             // HTTP request and adding XML formatter
             builder.Services.AddControllers(config =>
@@ -59,10 +69,6 @@ namespace ComputerHardwareStore
             builder.Services.AddCustomMediaTypes();
 
             builder.Services.ConfigureVersioning();
-
-            // Cache
-            builder.Services.ConfigureResponseCaching();
-            builder.Services.ConfigureHttpCacheHeaders();
 
             // Suprresing filters of ApiController attribute
             builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -114,6 +120,9 @@ namespace ComputerHardwareStore
             {
                 ForwardedHeaders = ForwardedHeaders.All
             });
+
+            app.UseIpRateLimiting();
+
             app.UseCors("CorsPolicy");
 
             app.UseResponseCaching();
