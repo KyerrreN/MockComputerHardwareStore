@@ -54,6 +54,11 @@ namespace ComputerHardwareStore
             builder.Services.ConfigureRateLimitingOptions();
             builder.Services.AddHttpContextAccessor();
 
+            // Identity
+            builder.Services.AddAuthentication();
+            builder.Services.ConfigureIdentity();
+            builder.Services.ConfigureJWT(builder.Configuration);
+
             // Configure to accept headers from 
             // HTTP request and adding XML formatter
             builder.Services.AddControllers(config =>
@@ -128,6 +133,7 @@ namespace ComputerHardwareStore
             app.UseResponseCaching();
             app.UseHttpCacheHeaders();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

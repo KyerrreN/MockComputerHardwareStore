@@ -2,6 +2,7 @@
 using ComputerHardwareStore.Presentation.ModelBinders;
 using FluentValidation;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -31,6 +32,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         // Action Methods
         [HttpGet(Name = "GetGraphicsCards")]
+        [Authorize]
         public async Task<IActionResult> GetGraphicsCards()
         {
             var graphicsCards = await _service.GraphicsCardService.GetAllGraphicsCardsAsync(trackChanges: false);

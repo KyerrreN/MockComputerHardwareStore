@@ -1,10 +1,12 @@
 ﻿using Entities.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Repository.Configuration;
 
 namespace Repository
 {
-    public class RepositoryContext : DbContext
+    public class RepositoryContext : IdentityDbContext<User>
     {
         // CTOR
         public RepositoryContext(DbContextOptions options) : base (options)
@@ -14,11 +16,13 @@ namespace Repository
         // OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new GraphicsCardConfiguration());
             modelBuilder.ApplyConfiguration(new BenchmarkConfiguration());
             modelBuilder.ApplyConfiguration(new GraphicsCardBenchmarkConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration()); 
         }
-
 
         // Db Sets
         public DbSet<GraphicsCard>? GraphicsCards { get; set; }

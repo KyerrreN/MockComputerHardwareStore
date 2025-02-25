@@ -47,6 +47,9 @@ namespace ComputerHardwareStore.MappingProfile
                 opt => opt.MapFrom(x => (BenchmarkSettings)x.Settings))
                 .ForMember(x => x.Resolution,
                 opt => opt.MapFrom(x => (BenchmarkResolution)x.Resolution));
+
+            // User
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }

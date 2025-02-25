@@ -11,5 +11,6 @@ namespace Service.Contracts
         IGraphicsCardService GraphicsCardService { get; }
         IGraphicsCardBenchmarkService GraphicsCardBenchmarkService { get; }
         IBenchmarkService BenchmarkService { get; }
+        IAuthenticationService AuthenticationService { get; }
     }
 }
