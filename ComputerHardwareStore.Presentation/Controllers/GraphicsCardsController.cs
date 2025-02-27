@@ -32,7 +32,6 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         // Action Methods
         [HttpGet(Name = "GetGraphicsCards")]
-        [Authorize]
         public async Task<IActionResult> GetGraphicsCards()
         {
             var graphicsCards = await _service.GraphicsCardService.GetAllGraphicsCardsAsync(trackChanges: false);
@@ -60,6 +59,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         [HttpPost(Name = "CreateGraphicsCard")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateGraphicsCard([FromBody] GraphicsCardForCreationDto graphicsCard)
         {
             //if (graphicsCard is null)
@@ -75,6 +75,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPost("collection")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateGraphicsCardCollection([FromBody] IEnumerable<GraphicsCardForCreationDto> graphicsCardCollection)
         {
             _postGraphicsCardCollectionValidator.ValidateAndThrow(graphicsCardCollection);
@@ -85,6 +86,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteGraphicsCard(Guid id)
         {
             await _service.GraphicsCardService.DeleteGraphicsCardAsync(id, trackChanges: false);
@@ -94,6 +96,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         [HttpPut("{id:guid}")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateGraphicsCard(Guid id, [FromBody] GraphicsCardForUpdateDto graphicsCardForUpdate)
         {
             //if (graphicsCardForUpdate is null)

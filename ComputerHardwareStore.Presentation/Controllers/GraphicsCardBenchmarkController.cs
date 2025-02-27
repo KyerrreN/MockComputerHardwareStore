@@ -1,6 +1,7 @@
 ﻿using ComputerHardwareStore.Presentation.ActionFilters;
 using Entities.LinkModels;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -12,6 +13,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 {
     [Route("api/graphicscards/{graphicsCardId}/benchmarks")]
     [ApiController]
+    [Authorize]
     public class GraphicsCardBenchmarkController : ControllerBase
     {
         private readonly IServiceManager _service;
@@ -52,11 +54,9 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         [HttpPost("{id:guid}")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] GraphicsCardBenchmarkForCreationDto graphicsCardBenchmark)
         {
-            //if (graphicsCardBenchmark is null)
-            //    return BadRequest("GraphicsCardBenchmarkForCreationDto object is null");
-
             _postValidator.ValidateAndThrow(graphicsCardBenchmark);
 
             var graphicsCardBenchmarkToReturn = await _service.GraphicsCardBenchmarkService.CreateGraphicsCardBenchmarkAsync
@@ -71,6 +71,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteGraphicsCardBenchmark(Guid graphicsCardId, Guid id)
         {
             await _service.GraphicsCardBenchmarkService.DeleteBenchmarkForGraphicsCardAsync(graphicsCardId, id, false);
@@ -80,6 +81,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 
         [HttpPut("{id:guid}")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] GraphicsCardBenchmarkForUpdateDto graphicsCardBenchmark)
         {
             //if (graphicsCardBenchmark is null)
@@ -97,6 +99,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
         }
 
         [HttpPatch("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PartiallyUpdateGraphicsCardBenchmark(Guid graphicsCardId, Guid id, [FromBody] JsonPatchDocument<GraphicsCardBenchmarkForUpdateDto> patchDoc)
         {
             if (patchDoc is null)

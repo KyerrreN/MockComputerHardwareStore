@@ -1,5 +1,6 @@
 ﻿using ComputerHardwareStore.Presentation.ActionFilters;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -8,6 +9,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 {
     [ApiController]
     [Route("api/benchmarks")]
+    [Authorize(Roles = "Admin")]
     public class BenchmarkController : ControllerBase
     {
         private readonly IServiceManager _service;
