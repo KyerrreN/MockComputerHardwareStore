@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace ComputerHardwareStore.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20250227111901_AdditionalUserFieldsForRefreshToken")]
+    partial class AdditionalUserFieldsForRefreshToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -375,13 +378,13 @@ namespace ComputerHardwareStore.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9184d38f-2ccb-4e94-af86-d6780e9ac68c",
+                            Id = "7b34360e-154e-4322-b7fe-d3a75469c663",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a4304e8f-1255-461c-8b8d-dd25ed8371a0",
+                            Id = "42f6ce83-257b-4df4-96e0-f887318f6cf1",
                             Name = "Consumer",
                             NormalizedName = "CONSUMER"
                         });
