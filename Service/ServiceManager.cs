@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.ConfigurationModels;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Service.Contracts;
-using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Service
 {
@@ -27,7 +22,7 @@ namespace Service
                               IMapper mapper,
                               IGraphicsCardBenchmarkLinks graphicsCardBenchmarkLinks,
                               UserManager<User> userManager,
-                              IConfiguration configuration,
+                              IOptions<JwtConfiguration> configuration,
                               RoleManager<IdentityRole> roleManager)
         {
             _graphicsCardBenchmarkService = new Lazy<IGraphicsCardBenchmarkService>(() =>

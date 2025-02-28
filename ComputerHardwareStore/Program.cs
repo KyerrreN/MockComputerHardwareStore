@@ -58,6 +58,7 @@ namespace ComputerHardwareStore
             builder.Services.AddAuthentication();
             builder.Services.ConfigureIdentity();
             builder.Services.ConfigureJWT(builder.Configuration);
+            builder.Services.AddJwtConfiguration(builder.Configuration);
 
             // Configure to accept headers from 
             // HTTP request and adding XML formatter
@@ -66,7 +67,7 @@ namespace ComputerHardwareStore
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
                 config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
-                config.CacheProfiles.Add("120secondsDuration", new CacheProfile { Duration = 120  });
+                config.CacheProfiles.Add("120secondsDuration", new CacheProfile { Duration = 120 });
             }).AddXmlDataContractSerializerFormatters()
               .AddCustomCSVFormatter()
               .AddApplicationPart(typeof(ComputerHardwareStore.Presentation.AssemblyReference).Assembly);
