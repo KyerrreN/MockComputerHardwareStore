@@ -22,7 +22,7 @@ namespace Service
                               IMapper mapper,
                               IGraphicsCardBenchmarkLinks graphicsCardBenchmarkLinks,
                               UserManager<User> userManager,
-                              IOptions<JwtConfiguration> configuration,
+                              IOptionsSnapshot<JwtConfiguration> configuration,
                               RoleManager<IdentityRole> roleManager)
         {
             _graphicsCardBenchmarkService = new Lazy<IGraphicsCardBenchmarkService>(() =>

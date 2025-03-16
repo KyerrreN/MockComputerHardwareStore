@@ -20,14 +20,14 @@ namespace Service
     {
         private readonly ILoggerManager _logger;
         private readonly UserManager<User> _userManager;
-        private readonly IOptions<JwtConfiguration> _configuration;
+        private readonly IOptionsSnapshot<JwtConfiguration> _configuration;
         private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JwtConfiguration _jwtConfiguration;
 
         private User? _user;
 
-        public AuthenticationService(ILoggerManager logger, UserManager<User> userManager, IOptions<JwtConfiguration> configuration, IMapper mapper, RoleManager<IdentityRole> roleManager)
+        public AuthenticationService(ILoggerManager logger, UserManager<User> userManager, IOptionsSnapshot<JwtConfiguration> configuration, IMapper mapper, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _userManager = userManager;
