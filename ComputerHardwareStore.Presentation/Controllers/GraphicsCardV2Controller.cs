@@ -5,6 +5,7 @@ namespace ComputerHardwareStore.Presentation.Controllers
 {
     [ApiController]
     [Route("api/graphicscards")]
+    [ApiExplorerSettings(GroupName = "v2")]
     public class GraphicsCardV2Controller : ControllerBase
     {
         private readonly IServiceManager _services;

@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ComputerHardwareStore.Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.AuthenticationController.RegisterUser(Shared.DataTransferObjects.UserForRegistrationDto)">
+            <summary>
+            Adds a new user to consume our API
+            </summary>
+            <param name="userForRegistration"></param>
+            <returns></returns>
+            <response code="201">If a user was created succesfully</response>
+            <response code="400">If user information is null</response>
+            <response code="422">If user information is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.AuthenticationController.Authenticate(Shared.DataTransferObjects.UserForAuthenticationDto)">
+            <summary>
+            Authenticates a user based on his credentials
+            </summary>
+            <param name="user"></param>
+            <returns>Access and refresh tokens</returns>
+            <response code="200">Returns access and refresh tokens for a specified user</response>\
+            <response code="401">If a user with provided credentials does not exist</response>
+            <response code="422">If user information is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.BenchmarkController.GetAllBenchmarks">
+            <summary>
+            Gets all benchmark items
+            </summary>
+            <returns></returns>
+            <response code="200">Returns a list of all available benchmarks</response>
+            <response code="401">If auth fails, or no suffucient rights</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.BenchmarkController.GetBenchmarkById(System.Guid)">
+            <summary>
+            Gets one benchmark item
+            </summary>
+            <param name="id">Id of a benchmark</param>
+            <returns>Benchmark item</returns>
+            <response code="200">Returns a benchmark item</response>
+            <response code="401">If auth fails, or no suffucient rights</response>
+            <response code="404">If benchmark with specified id does not exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.BenchmarkController.CreateBenchmark(Shared.DataTransferObjects.BenchmarkForCreationDto)">
+            <summary>
+            Creates a benchmark item
+            </summary>
+            <param name="bechmark"></param>
+            <returns>A newly created benchmark item</returns>
+            <response code="201">Returns a newly created benchmark item</response>
+            <response code="400">If benchmark dto is null</response>
+            <response code="401">If auth fails, or no suffucient rights</response>
+            <response code="422">If benchmark dto is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardBenchmarkController.GetGraphicsCardBenchmarks(System.Guid,Shared.RequestFeatures.GraphicsCardBenchmarkParameters)">
+            <summary>
+            Returns a list of graphics card benchmarks for a graphics card with specified id
+            </summary>
+            <param name="graphicsCardId"></param>
+            <param name="parameters"></param>
+            <returns>A list of graphics card benchmarks</returns>
+            <response code="200">Returns a list of graphics card benchmarks with HATEOAS</response>
+            <response code="400">If one or more parameters is null</response>
+            <response code="401">If no auth token provided</response>
+            <response code="404">If graphics card with a specified id does not exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardBenchmarkController.GetGraphicsCardBenchmark(System.Guid,System.Guid)">
+            <summary>
+            Returns a graphics card benchmark item
+            </summary>
+            <param name="graphicsCardId">Id of a graphics card</param>
+            <param name="id">Id of a benchmark</param>
+            <returns>A graphics card benchmark item for a specified graphics card and benchmark</returns>
+            <response code="200">Returns a graphics card benchmark</response>
+            <response code="401">If no auth token is provided</response>
+            <response code="404">If a graphics card or benchmark with specified id does not exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardBenchmarkController.CreateGraphicsCardBenchmark(System.Guid,System.Guid,Shared.DataTransferObjects.GraphicsCardBenchmarkForCreationDto)">
+            <summary>
+            Created a graphics card benchmark item
+            </summary>
+            <param name="graphicsCardId">Id for a graphics card to add benchmark results</param>
+            <param name="id">Id of a benchmark</param>
+            <param name="graphicsCardBenchmark">Benchmark results</param>
+            <returns>A newly created graphics card benchmark for specified graphics card and bemchmark</returns>
+            <response code="201">Returns a newly created graphics card benchmark item</response>
+            <response code="400">If graphics card benchmark dto is null</response>
+            <response code="401">If no auth token is provided, or user does not have sufficient rights</response>
+            <response code="404">If a graphics card or benchmark with specified id does not exist</response>
+            <response code="422">If graphics card benchmark data is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardBenchmarkController.DeleteGraphicsCardBenchmark(System.Guid,System.Guid)">
+            <summary>
+            Deletes a graphics card benchmark item
+            </summary>
+            <param name="graphicsCardId">Id of a graphics card</param>
+            <param name="id">Id of a benchmark</param>
+            <returns></returns>
+            <response code="204">If graphics card benchmark item was deleted succesfully</response>
+            <response code="401">If no auth token provided, or user does not have sufficient rights</response>
+            <response code="404">If a graphics card or a benchmark with specified id does not exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardBenchmarkController.UpdateGraphicsCardBenchmark(System.Guid,System.Guid,Shared.DataTransferObjects.GraphicsCardBenchmarkForUpdateDto)">
+            <summary>
+            Updated a graphics card benchmark item
+            </summary>
+            <param name="graphicsCardId">Id of a graphics card</param>
+            <param name="id">Id of a benchmark</param>
+            <param name="graphicsCardBenchmark">Data to update a graphics card</param>
+            <returns></returns>
+            <response code="204">If a graphics card benchmark item is updated succefully</response>
+            <response code="400">If graphics card benchmark data is null</response>
+            <response code="401">If no auth token provided, or user does not have sufficient rights</response>
+            <response code="404">If a graphics card of a benchmark with specified id does not exist</response>
+            <response code="422">If graphics card benchmark data is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.GetGraphicsCards">
+            <summary>
+            Gets the list of all graphics cards
+            </summary>
+            <returns>Graphics Cards list</returns>
+            <response code="200">Returns list of all Graphics Cards</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.GetGraphicsCard(System.Guid)">
+            <summary>
+            Gets one entry of a graphics card by a specified id
+            </summary>
+            <param name="id">Id of a graphics card</param>
+            <returns>Graphics card item</returns>
+            <response code="200">Returns found graphics card item</response>
+            <response code="404">If graphics card with specified id doesn't exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.GetGraphicsCardCollection(System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            Gets all entries of graphics cards with specified Ids
+            </summary>
+            <param name="ids">Graphics Cards Id collection</param>
+            <returns>List of found graphics cards</returns>
+            <response code="200">Returns list of found graphics cards</response>
+            <response code="400">If ids collection is null</response>
+            <response code="422">If ids collection is invalid, or there is a mismatch between ids collection length and found graphics cards</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.CreateGraphicsCard(Shared.DataTransferObjects.GraphicsCardForCreationDto)">
+            <summary>
+            Creates a graphics card entry
+            </summary>
+            <param name="graphicsCard"></param>
+            <returns>A newly created graphics card</returns>
+            <response code="201">Returns the newly created item</response>
+            <response code="400">If an item is null</response>
+            <response code="401">If no Beared token is provided, or user does not have sufficient rights</response>
+            <response code="422">If validation on the model fails</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.CreateGraphicsCardCollection(System.Collections.Generic.IEnumerable{Shared.DataTransferObjects.GraphicsCardForCreationDto})">
+            <summary>
+            Creates several graphics card entires
+            </summary>
+            <param name="graphicsCardCollection"></param>
+            <returns>Newly created collection of graphics cards</returns>
+            <response code="201">Returns the newlt created items</response>
+            <response code="400">If a collection of graphics cards is null</response>
+            <response code="401">If Bearer token is not provided, or user does not have sufficient rights</response>
+            <response code="422">If a collection of graphics cards is invalid</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.DeleteGraphicsCard(System.Guid)">
+            <summary>
+            Deletes a graphics card item
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="204">If a graphics card was deleted succesfully</response>
+            <response code="401">If no Bearer token is provided, or user does not have sufficient rights</response>
+            <response code="404">If a graphics card with specified GUID does not exist</response>
+        </member>
+        <member name="M:ComputerHardwareStore.Presentation.Controllers.GraphicsCardsController.UpdateGraphicsCard(System.Guid,Shared.DataTransferObjects.GraphicsCardForUpdateDto)">
+            <summary>
+            Updates a graphics card item
+            </summary>
+            <param name="id"></param>
+            <param name="graphicsCardForUpdate"></param>
+            <returns></returns>
+            <response code="204">If a graphics card was updated succesfully</response>
+            <response code="400">If a graphics card dto is null</response>
+            <response code="401">If a Bearer token is not provided, or user does not have sufficient rights</response>
+            <response code="404">If a graphics card with specified GUID does not exist</response>
+            <response code="422">If a graphics card dto is invalid</response>
+        </member>
+    </members>
+</doc>

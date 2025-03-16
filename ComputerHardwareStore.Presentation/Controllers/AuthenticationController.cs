@@ -20,8 +20,19 @@ namespace ComputerHardwareStore.Presentation.Controllers
             _userForAuthenticationValidator = userForAuthenticationValidator;
         }
 
+        /// <summary>
+        /// Adds a new user to consume our API
+        /// </summary>
+        /// <param name="userForRegistration"></param>
+        /// <returns></returns>
+        /// <response code="201">If a user was created succesfully</response>
+        /// <response code="400">If user information is null</response>
+        /// <response code="422">If user information is invalid</response>
         [HttpPost]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
             _userForRegistrationValidator.ValidateAndThrow(userForRegistration);
@@ -41,8 +52,19 @@ namespace ComputerHardwareStore.Presentation.Controllers
             return StatusCode(201);
         }
 
+        /// <summary>
+        /// Authenticates a user based on his credentials
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Access and refresh tokens</returns>
+        /// <response code="200">Returns access and refresh tokens for a specified user</response>\
+        /// <response code="401">If a user with provided credentials does not exist</response>
+        /// <response code="422">If user information is invalid</response>
         [HttpPost("login")]
         [ServiceFilter(typeof(BindingValidationFilterAttribute))]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(422)]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
             _userForAuthenticationValidator.ValidateAndThrow(user);

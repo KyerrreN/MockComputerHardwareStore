@@ -116,7 +116,11 @@ namespace ComputerHardwareStore
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "ComputerHardwareStore API v1");
+                s.SwaggerEndpoint("/swagger/v2/swagger.json", "ComputerHardwareStore API v2");
+            });
 
             app.UseHttpsRedirection();
 

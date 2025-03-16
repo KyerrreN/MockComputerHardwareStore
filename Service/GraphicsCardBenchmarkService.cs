@@ -15,7 +15,6 @@ namespace Service
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        //private readonly IDataShaper<GraphicsCardBenchmarkDto> _dataShaper;
         private readonly IGraphicsCardBenchmarkLinks _graphicsCardBenchmarkLinks;
 
         public GraphicsCardBenchmarkService(IRepositoryManager repository,
@@ -26,7 +25,6 @@ namespace Service
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-            //_dataShaper = dataShaper;
             _graphicsCardBenchmarkLinks = graphicsCardBenchmarkLinks;
         }
 
